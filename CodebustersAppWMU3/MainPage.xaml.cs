@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
 using Windows.Foundation;
 using Windows.UI.Core;
@@ -46,7 +47,18 @@ namespace CodebustersAppWMU3
             //    uint reportInterval = minReportInterval > 16 ? minReportInterval : 16;
             //    _compass.ReportInterval = reportInterval;
             //    _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
-            //}
+            //}            
+            GetCoordinate();  
+        }
+        public async void GetCoordinate()
+        {
+            var locator = new Geolocator();
+            locator.DesiredAccuracyInMeters = 1;
+            var position = await locator.GetGeopositionAsync();
+            var myposition = position.Coordinate.Point;
+            var dummy = position.Coordinate.Point;
         }
     }
-}
+    }
+
+
