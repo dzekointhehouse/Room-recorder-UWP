@@ -8,10 +8,10 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="#FF0C0C0C">
-        <TextBlock HorizontalAlignment="Left" Height="22" Margin="8,18,0,0" TextWrapping="Wrap" Text="Magnetic Heading:" VerticalAlignment="Top" Width="104" Foreground="#FFFBF9F9"/>
-        <TextBlock HorizontalAlignment="Left" Height="18" Margin="8,58,0,0" TextWrapping="Wrap" Text="True North Heading:" VerticalAlignment="Top" Width="104" Foreground="#FFF3F3F3"/>
-        <TextBlock x:Name="txtMagnetic" HorizontalAlignment="Left" Height="22" Margin="130,18,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="116" Foreground="#FFFBF6F6"/>
-        <TextBlock x:Name="txtNorth" HorizontalAlignment="Left" Height="18" Margin="130,58,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="116" Foreground="#FFF5F1F1"/>
+        <Button x:Name="button" Content="New Room" HorizontalAlignment="Stretch" Margin="102,420,108,0" VerticalAlignment="Top" Background="DarkGreen"/>
+        <Button x:Name="button1" Content="Existing room" HorizontalAlignment="Stretch" Margin="102,474,108,0" VerticalAlignment="Top" Background="DarkGreen"/>
+        <Image x:Name="image" Height="216" Margin="10,123,10,0" VerticalAlignment="Top" Source="Assets/room.jpg"/>
+        <TextBlock x:Name="textBlock" Margin="10,69,10,0" TextWrapping="Wrap" Text="Room Recorder" VerticalAlignment="Top" Foreground="DarkGreen" HorizontalAlignment="Center" FontSize="20"/>
 
     </Grid>
 </Page>
