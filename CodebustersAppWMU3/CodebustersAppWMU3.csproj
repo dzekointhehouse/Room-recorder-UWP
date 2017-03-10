@@ -98,6 +98,9 @@
     <Compile Include="CreateRoomPage.xaml.cs">
       <DependentUpon>CreateRoomPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CreateSurfacesPage.xaml.cs">
+      <DependentUpon>CreateSurfacesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="CreateRoomPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateSurfacesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

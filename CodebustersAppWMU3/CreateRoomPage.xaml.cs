@@ -66,6 +66,8 @@ namespace CodebustersAppWMU3
                 Longt = double.Parse(LongtValue.Text),
                 Lat = double.Parse(LatiValue.Text)
             };
+
+            Frame.Navigate(typeof(CreateSurfacesPage), newRoom);
         }
     }
 }

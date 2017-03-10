@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="#FF0C0C0C">
-        <TextBox x:Name="Title" Margin="31,212,31,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top"/>
+        <TextBox x:Name="Title" Margin="31,212,31,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" />
         <TextBox x:Name="Description" Margin="31,270,31,0" TextWrapping="Wrap" Text="Detailed Description" VerticalAlignment="Top" Height="260"/>
         <Button x:Name="CreateBtn" Content="Create Room" Margin="194,0,31,42" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="DarkGreen" Height="32" Click="CreateBtn_Click"/>
         <TextBlock x:Name="Latitude"  Foreground="DarkGreen" HorizontalAlignment="Left" Margin="31,143,0,0" TextWrapping="Wrap" Text="Lat" VerticalAlignment="Top"/>
