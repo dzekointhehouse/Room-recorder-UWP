@@ -8,10 +8,10 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="#FF0C0C0C">
-        <Button x:Name="button" Content="New Room" HorizontalAlignment="Stretch" Margin="102,420,108,0" VerticalAlignment="Top" Background="DarkGreen"/>
-        <Button x:Name="button1" Content="Existing room" HorizontalAlignment="Stretch" Margin="102,474,108,0" VerticalAlignment="Top" Background="DarkGreen"/>
-        <Image x:Name="image" Height="216" Margin="10,123,10,0" VerticalAlignment="Top" Source="Assets/room.jpg"/>
-        <TextBlock x:Name="textBlock" Margin="10,69,10,0" TextWrapping="Wrap" Text="Room Recorder" VerticalAlignment="Top" Foreground="DarkGreen" HorizontalAlignment="Center" FontSize="20"/>
+        <Button x:Name="NewRoom" Content="New Room" HorizontalAlignment="Stretch" Margin="102,420,108,0" VerticalAlignment="Top" Background="DarkGreen" Click="NewRoom_Click"/>
+        <Button x:Name="ExistingRoom" Content="Existing room" HorizontalAlignment="Stretch" Margin="102,474,108,0" VerticalAlignment="Top" Background="DarkGreen"/>
+        <Image x:Name="Picture" Height="216" Margin="10,123,10,0" VerticalAlignment="Top" Source="Assets/room.jpg"/>
+        <TextBlock x:Name="Title" Margin="10,69,10,0" TextWrapping="Wrap" Text="Room Recorder" VerticalAlignment="Top" Foreground="DarkGreen" HorizontalAlignment="Center" FontSize="20"/>
 
     </Grid>
 </Page>

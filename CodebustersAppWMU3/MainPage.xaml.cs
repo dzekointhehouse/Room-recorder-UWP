@@ -58,6 +58,11 @@ namespace CodebustersAppWMU3
             var myposition = position.Coordinate.Point;
             var dummy = position.Coordinate.Point;
         }
+
+        private void NewRoom_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof())
+        }
     }
     }
 
