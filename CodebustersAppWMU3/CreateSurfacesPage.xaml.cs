@@ -28,7 +28,8 @@ namespace CodebustersAppWMU3
     /// </summary>
     public sealed partial class CreateSurfacesPage : Page
     {
-        private int CurrRoom;
+        private int CurrSurface;
+        enum Days { left = 0, Front, right, back,};
         public CreateSurfacesPage()
         {
             this.InitializeComponent();
@@ -85,10 +86,11 @@ namespace CodebustersAppWMU3
         {
 
             int x1=0, x2=0, y1=0, y2=0, horizontal, vertical;
+            Room currentRoom;
 
             if (eventArgs.Parameter != null)
             {
-                var currentRoom = (Room) eventArgs.Parameter;
+                currentRoom = (Room) eventArgs.Parameter;
                 Camera(currentRoom);
             }
 
@@ -112,24 +114,63 @@ namespace CodebustersAppWMU3
 
                     if (x1 > x2 && horizontal > vertical)
                     {
-                        SwipeBlock.Text = "Swiped Left";
+                        if (CurrSurface != 0)
+                        {
+                            CurrSurface--;
+                        }
+                        else
+                        {
+                            CurrSurface = 3;
+                        }
+                        SwipeBlock.Text = side(CurrSurface);
                     }
                     else if (x1 < x2 && horizontal > vertical)
                     {
-                        SwipeBlock.Text = "Swiped Right";
+                        if (CurrSurface < 3)
+                        {
+                            CurrSurface++;
+                        }
+                        else
+                        {
+                            CurrSurface = 0;
+                        }
+                        
+                        SwipeBlock.Text = side(CurrSurface);
+
                     }
                     else if (y1 > y2 && horizontal < vertical)
                     {
-                        SwipeBlock.Text = "Swiped Up";
+                        CurrSurface = 4;
+                        SwipeBlock.Text = side(CurrSurface);
+
                     }
                     else if (y1 < y2 && horizontal < vertical)
                     {
-                        SwipeBlock.Text = "Swiped Down";
+                        CurrSurface = 5;
+                        SwipeBlock.Text = side(CurrSurface);
                     }
                 };
 
-
-            
+        }
+        private string side(int side)
+        {
+            switch (side)
+            {
+                case 0:
+                    return "left side";
+                case 1:
+                    return "Front side";
+                case 2:
+                    return "Right side";
+                case 3:
+                    return "Back side";
+                case 4:
+                    return "Bottom side";
+                case 5:
+                    return "top side";
+                default:
+                    return "";
+            }
         }
     }
 }

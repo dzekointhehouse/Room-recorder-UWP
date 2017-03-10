@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid Background="Black">
-        <Image x:Name="image" HorizontalAlignment="Left" Height="375" Margin="10,10,0,0" VerticalAlignment="Top" Width="340" Source="Assets/Square150x150Logo.png" Stretch="Fill" Opacity="0.2"/>
-    <TextBlock x:Name="SwipeBlock" Foreground="White" HorizontalAlignment="Left" Margin="130,165,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="58" Width="103" RenderTransformOrigin="1.812,0.548"/>
-</Grid>
+        <TextBlock x:Name="SwipeBlock" Foreground="DarkGreen" Margin="10,10,10,0" TextWrapping="Wrap" Text="Side" HorizontalAlignment="Center" VerticalAlignment="Top" Height="58" RenderTransformOrigin="1.812,0.548" FontSize="18" FontWeight="Bold"/>
+    </Grid>
 </Page>
