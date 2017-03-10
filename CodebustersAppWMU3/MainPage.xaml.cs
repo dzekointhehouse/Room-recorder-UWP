@@ -61,7 +61,7 @@ namespace CodebustersAppWMU3
 
         private void NewRoom_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Frame.Navigate(typeof())
+            Frame.Navigate(typeof(CreateRoomPage));
         }
     }
     }
