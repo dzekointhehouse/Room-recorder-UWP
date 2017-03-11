@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Surface.cs" />
+    <Compile Include="Models\SurfaceOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
