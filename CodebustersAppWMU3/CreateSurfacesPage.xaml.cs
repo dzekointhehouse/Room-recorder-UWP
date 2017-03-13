@@ -31,7 +31,7 @@ namespace CodebustersAppWMU3
     {
         private int _currSurface;
         private Room _currentRoom;
-        private enum Days { Left = 0, Front, Right, Back};
+        private enum Sides { Left = 0, Front, Right, Back};
         public CreateSurfacesPage()
         {
             this.InitializeComponent();
