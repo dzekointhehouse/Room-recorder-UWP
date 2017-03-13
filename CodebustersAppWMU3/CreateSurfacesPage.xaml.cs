@@ -178,5 +178,10 @@ namespace CodebustersAppWMU3
                 CheckIfPictureExist();
             };
         }
+
+        private void SurfaceDescriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SurfaceDetails), _currentRoom);
+        }
     }
 }

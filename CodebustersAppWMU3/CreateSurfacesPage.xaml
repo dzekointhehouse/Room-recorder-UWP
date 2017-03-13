@@ -12,7 +12,7 @@
                 Background="DarkGreen" 
                 Content="&#xE114;" 
                 HorizontalAlignment="Stretch" 
-                Margin="109,0,109,38" 
+                Margin="35,0,183,31" 
                 VerticalAlignment="Bottom" 
                 FontFamily="Segoe UI Symbol" 
                 FontSize="20" Height="54" Click="CameraButton_Click"/>
@@ -27,5 +27,14 @@
             <TextBlock x:Name="SwipeBlock" Foreground="White" TextWrapping="Wrap" Text="Side" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" RenderTransformOrigin="1.812,0.548" FontSize="18" FontWeight="Bold" Width="135" TextAlignment="Right" Canvas.Left="215"/>
         </Canvas>
         <Image x:Name="SurfaceImage" Height="325" Margin="10,116,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="SurfaceDescriptionButton" 
+            Foreground="White" 
+            Background="DarkGreen" 
+            Content="&#xE12A;" 
+            HorizontalAlignment="Stretch" 
+            Margin="182,0,36,31" 
+            VerticalAlignment="Bottom" 
+            FontFamily="Segoe UI Symbol" 
+            FontSize="20" Height="54" Click="SurfaceDescriptionButton_Click"/>
     </Grid>
 </Page>
