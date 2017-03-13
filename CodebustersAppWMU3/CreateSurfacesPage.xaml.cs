@@ -97,26 +97,14 @@ namespace CodebustersAppWMU3
                     CreationCollisionOption.OpenIfExists);
             try
             {
-                IRandomAccessStream stream =
-                    await destinationFolder.GetFileAsync(surfaceFileName).GetResults().OpenAsync(FileAccessMode.Read);
-            
 
-            if (stream.CanRead)
-            {
- 
-                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-                    SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+                BitmapImage bitmapImage = new BitmapImage();
+                StorageFile file = await destinationFolder.GetFileAsync(surfaceFileName);
+                var image = await Windows.Storage.FileIO.ReadBufferAsync(file);
+                Uri uri = new Uri(file.Path);
+                BitmapImage img = new BitmapImage(new Uri(file.Path));
+                SurfaceImage.Source = img;
 
-                    SoftwareBitmap softwareBitmapBGR8 = SoftwareBitmap.Convert(softwareBitmap,
-                        BitmapPixelFormat.Bgra8,
-                        BitmapAlphaMode.Premultiplied);
-
-                    SoftwareBitmapSource bitmapSource = new SoftwareBitmapSource();
-                    await bitmapSource.SetBitmapAsync(softwareBitmapBGR8);
-
-                    SurfaceImage.Source = bitmapSource;
-   
-            }
             }
             catch
             {
