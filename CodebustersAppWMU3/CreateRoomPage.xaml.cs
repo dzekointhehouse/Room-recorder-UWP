@@ -84,15 +84,19 @@ namespace CodebustersAppWMU3
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            double lat = double.Parse(LatiValue.Text);
-            double longt = double.Parse(LongtValue.Text);
+            try
+            {
+                // Get position values.
+                double lat = double.Parse(LatiValue.Text);
+                double longt = double.Parse(LongtValue.Text);
+            }
+            catch
+            {
+                // Do nothing if incorrect position values!
+                return;
+            }
 
             //// Check if title already exists!
-            //if (Title.Text == "" || Description.Text == "")
-            //{
-            //    DisplayErrorDialog("Please, give me something bro!");
-            //    return;
-            //}
 
             if (!IsTitleAllowed(Title.Text))
             {

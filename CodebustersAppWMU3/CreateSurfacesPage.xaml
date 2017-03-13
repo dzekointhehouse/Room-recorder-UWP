@@ -23,7 +23,7 @@
                     <GradientStop Color="DarkGreen" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <TextBlock x:Name="TitleBlock" Foreground="White"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" Height="30" Width="147" FontSize="18" FontWeight="Bold" Canvas.Left="10"/>
+            <TextBlock x:Name="TitleBlock" Foreground="White"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" Height="30" Width="200" FontSize="18" FontWeight="Bold" Canvas.Left="10"/>
             <TextBlock x:Name="SwipeBlock" Foreground="White" TextWrapping="Wrap" Text="Side" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" RenderTransformOrigin="1.812,0.548" FontSize="18" FontWeight="Bold" Width="135" TextAlignment="Right" Canvas.Left="215"/>
         </Canvas>
         <Image x:Name="SurfaceImage" Height="325" Margin="10,116,10,0" VerticalAlignment="Top"/>
