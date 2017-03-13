@@ -61,7 +61,7 @@ namespace CodebustersAppWMU3
             // Approriately saving the picture file with the room title and current room SurfaceSide
             // for identification later.
 
-            var surfaceFileName = _currentRoom.Title + _currSurface;
+            var surfaceFileName = _currentRoom.Title + SurfaceOptions.SurfaceSide(_currSurface);
 
             await photo.CopyAsync(
                 destinationFolder,
@@ -90,8 +90,8 @@ namespace CodebustersAppWMU3
 
         private async void CheckIfPictureExist()
         {
-            var surfaceFileName = _currentRoom.Title + _currSurface;
-
+            var surfaceFileName = _currentRoom.Title + SurfaceOptions.SurfaceSide(_currSurface);
+            
             StorageFolder destinationFolder =
                 await ApplicationData.Current.LocalFolder.CreateFolderAsync("RoomDocumentation",
                     CreationCollisionOption.OpenIfExists);

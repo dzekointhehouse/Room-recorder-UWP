@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -54,6 +55,7 @@ namespace CodebustersAppWMU3
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
+                rootFrame.Navigated += OnNavigated;
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
@@ -64,6 +66,15 @@ namespace CodebustersAppWMU3
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
+            // Register a handler for BackRequested events and set the
+            // visibility of the Back button
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                rootFrame.CanGoBack ?
+                AppViewBackButtonVisibility.Visible :
+                AppViewBackButtonVisibility.Collapsed;
+
 
             if (e.PrelaunchActivated == false)
             {
@@ -77,6 +88,14 @@ namespace CodebustersAppWMU3
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+        private void OnNavigated(object sender, NavigationEventArgs e)
+        {
+            // Each time a navigation event occurs, update the Back button's visibility
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                ((Frame)sender).CanGoBack ?
+                AppViewBackButtonVisibility.Visible :
+                AppViewBackButtonVisibility.Collapsed;
         }
 
         /// <summary>
@@ -101,6 +120,17 @@ namespace CodebustersAppWMU3
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame.CanGoBack)
+            {
+                e.Handled = true;
+                int x = rootFrame.BackStackDepth;
+                    rootFrame.GoBack();
+            }
         }
     }
 }
