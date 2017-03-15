@@ -12,7 +12,7 @@
                 Background="DarkGreen" 
                 Content="&#xE114;" 
                 HorizontalAlignment="Stretch" 
-                Margin="35,0,183,31" 
+                Margin="35,0,51,31" 
                 VerticalAlignment="Bottom" 
                 FontFamily="Segoe UI Symbol" 
                 FontSize="20" Height="54" Click="CameraButton_Click"/>
@@ -32,7 +32,7 @@
             Background="DarkGreen" 
             Content="&#xE12A;" 
             HorizontalAlignment="Stretch" 
-            Margin="182,0,36,31" 
+            Margin="35,0,51,90" 
             VerticalAlignment="Bottom" 
             FontFamily="Segoe UI Symbol" 
             FontSize="20" Height="54" Click="SurfaceDescriptionButton_Click"/>

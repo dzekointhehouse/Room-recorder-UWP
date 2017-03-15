@@ -63,6 +63,10 @@ namespace CodebustersAppWMU3
         {
             Frame.Navigate(typeof(CreateRoomPage));
         }
+        //private void Existing_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+
+        //    Frame.Navigate(typeof(ExistingRoomPage));
+        //}
     }
     }
 
