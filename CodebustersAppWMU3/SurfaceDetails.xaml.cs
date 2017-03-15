@@ -32,17 +32,28 @@ namespace CodebustersAppWMU3
             ReadFile();
         }
         public async void ReadFile() {
-            StorageFolder destinationFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("RoomDocumentation",
-                    CreationCollisionOption.OpenIfExists); ;
-           // StorageFile sampleFile = await destinationFolder.GetFileAsync("ElvirrumRight.txt");
-            var files = await destinationFolder.GetFilesAsync();
-            var desierdfile = files.FirstOrDefault(x => x.Name == "ElvirrumRighttext.txt");
-            //var text = await Windows.Storage.FileIO.ReadBufferAsync(desierdfile);
-                string fileContent = await FileIO.ReadTextAsync(desierdfile);
+            StorageFolder storageFolder =  await ApplicationData.Current.LocalFolder.CreateFolderAsync("RoomDocumentation",
+                    CreationCollisionOption.OpenIfExists); 
+           StorageFile ticketsFile = await storageFolder.CreateFileAsync("ElvirrumRight.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+
+            //Write data to the file
+            await Windows.Storage.FileIO.WriteTextAsync(ticketsFile, "Right ");
+
+            //read file
+            string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(ticketsFile);
+
+            Title.Text = savedTickets;
+            //StorageFolder destinationFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("RoomDocumentation",
+                    //CreationCollisionOption.OpenIfExists); 
+           //// StorageFile sampleFile = await destinationFolder.GetFileAsync("ElvirrumRight.txt");
+           // var files = await destinationFolder.GetFilesAsync();
+           // var desierdfile = files.FirstOrDefault(x => x.Name == "ElvirrumRighttext.txt");
+           // //var text = await Windows.Storage.FileIO.ReadBufferAsync(desierdfile);
+           //     string fileContent = await FileIO.ReadTextAsync(desierdfile);
 
         
-                fileContent.ToString();
-                Title.Text = fileContent;
+           //     fileContent.ToString();
+           //     Title.Text = fileContent;
             
         }
 
