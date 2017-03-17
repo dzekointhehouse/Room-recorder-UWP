@@ -31,6 +31,7 @@ namespace CodebustersAppWMU3
     {
         private int _currSurface;
         private Room _currentRoom;
+        private CameraServices _photoService;
         private enum Sides { Left = 0, Front, Right, Back};
         public CreateSurfacesPage()
         {
@@ -40,40 +41,6 @@ namespace CodebustersAppWMU3
             SwipeBlock.Text = SurfaceOptions.SurfaceSide(_currSurface);
         }
 
-        private async void GetCamera()
-        {
-            CameraCaptureUI captureUI = new CameraCaptureUI();
-            captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
-            captureUI.PhotoSettings.CroppedSizeInPixels = new Size();
-
-            StorageFile photo = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
-
-            if (photo == null)
-            {
-                // User cancelled photo capture
-                return;
-            }
-
-            StorageFolder destinationFolder =
-                await ApplicationData.Current.LocalFolder.CreateFolderAsync("RoomDocumentation",
-                    CreationCollisionOption.OpenIfExists);
-
-            // Approriately saving the picture file with the room title and current room SurfaceSide
-            // for identification later.
-
-            var surfaceFileName = _currentRoom.Title + SurfaceOptions.SurfaceSide(_currSurface);
-
-            await photo.CopyAsync(
-                destinationFolder,
-                surfaceFileName,
-                NameCollisionOption.ReplaceExisting);
-            await photo.DeleteAsync();
-
-
-
-
-        }
-
 
         protected override void OnNavigatedTo(NavigationEventArgs eventArgs)
         {
@@ -81,6 +48,7 @@ namespace CodebustersAppWMU3
 
             if (eventArgs.Parameter != null)
             {
+                _photoService = new CameraServices();
                 _currentRoom = (Room) eventArgs.Parameter;
                 TitleBlock.Text = _currentRoom.Title;
             }
@@ -88,37 +56,16 @@ namespace CodebustersAppWMU3
 
         }
 
-        private async void CheckIfPictureExist()
+   
+        private async void CameraButton_Click(object sender, RoutedEventArgs e)
         {
-            var surfaceFileName = _currentRoom.Title + SurfaceOptions.SurfaceSide(_currSurface);
-            
-            StorageFolder destinationFolder =
-                await ApplicationData.Current.LocalFolder.CreateFolderAsync("RoomDocumentation",
-                    CreationCollisionOption.OpenIfExists);
-            try
+            StorageFile photo = await _photoService.GetCamera();
+
+            if (photo != null)
             {
-
-                BitmapImage bitmapImage = new BitmapImage();
-                StorageFile file = await destinationFolder.GetFileAsync(surfaceFileName);
-                var image = await Windows.Storage.FileIO.ReadBufferAsync(file);
-                Uri uri = new Uri(file.Path);
-                BitmapImage img = new BitmapImage(new Uri(file.Path));
-                SurfaceImage.Source = img;
-
+                // Assign photo to currentRoom -> current surface -> room photo
+                _currentRoom.Surfaces[_currSurface].SurfaceImage = photo;
             }
-            catch
-            {
-
-            
-            BitmapImage bitmapImage = new BitmapImage(new Uri(this.BaseUri, "/Assets/Square150x150Logo.scale-200.png"));
-
-                SurfaceImage.Source = bitmapImage;
-            }
-
-        }
-        private void CameraButton_Click(object sender, RoutedEventArgs e)
-        {
-            GetCamera();
         }
 
         private void SwipeConfiguration()
@@ -133,7 +80,7 @@ namespace CodebustersAppWMU3
                 x1 = (int)e.Position.X;
                 y1 = (int)e.Position.Y;
             };
-            ManipulationCompleted += (s, e) =>
+            ManipulationCompleted += async (s, e) =>
             {
                 x2 = (int)e.Position.X;
                 y2 = (int)e.Position.Y;
@@ -175,7 +122,9 @@ namespace CodebustersAppWMU3
                 }
 
                 SwipeBlock.Text = SurfaceOptions.SurfaceSide(_currSurface);
-                CheckIfPictureExist();
+                BitmapImage img = await _photoService.CheckIfPictureExist(_currentRoom.Title, _currSurface, this.BaseUri);
+                SurfaceImage.Source = img;
+
             };
         }
 
