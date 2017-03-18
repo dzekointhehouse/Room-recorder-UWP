@@ -104,7 +104,15 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20170317204635_initial.cs" />
+    <Compile Include="Migrations\20170317204635_initial.designer.cs">
+      <DependentUpon>20170317204635_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\RoomDbContextModelSnapshot.cs" />
     <Compile Include="Models\CameraServices.cs" />
+    <Compile Include="Services\DatabaseRepository.cs" />
+    <Compile Include="Services\ErrorMessage.cs" />
+    <Compile Include="Services\RoomDbContext.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Surface.cs" />
     <Compile Include="Models\SurfaceOptions.cs" />

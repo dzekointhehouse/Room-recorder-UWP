@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CodebustersAppWMU3.Models;
+using CodebustersAppWMU3.Services;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -62,7 +63,7 @@ namespace CodebustersAppWMU3
                     break;
 
                 case GeolocationAccessStatus.Unspecified:
-                    DisplayErrorDialog("Some kind of error occured, please try again!");
+                    ErrorMessage.DisplayErrorDialog("Some kind of error occured, please try again!");
                     Frame.Navigate(typeof(MainPage));
                     break;
             }
@@ -100,13 +101,13 @@ namespace CodebustersAppWMU3
 
             if (!IsTitleAllowed(Title.Text))
             {
-                DisplayErrorDialog("Please, check yo title again!");
+                ErrorMessage.DisplayErrorDialog("Please, check yo title again!");
                 return;
             }
 
             if (Description.Text == "")
             {
-                DisplayErrorDialog("Please, check yo description again!");
+                ErrorMessage.DisplayErrorDialog("Please, check yo description again!");
                 return;
             }
 
@@ -117,26 +118,28 @@ namespace CodebustersAppWMU3
                 Longt = double.Parse(LongtValue.Text),
                 Lat = double.Parse(LatiValue.Text)
             };
-
+            using (var db = new RoomDbContext())
+            {
+                // Don't have Id, so this was the first I came up with to do.
+                if (db.Rooms.FirstOrDefault(g => g.Title == newRoom.Title) == null)
+                {
+                    db.Rooms.Add(newRoom);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ErrorMessage.DisplayErrorDialog("Room name is taken!");
+                    return;
+                }
+                
+            }
             Frame.Navigate(typeof(CreateSurfacesPage), newRoom);
         }
-
-        //private static bool IsTextAllowed(string text)
-        //{
-        //    Regex regex = new Regex(@"^[a-zA-Z0-9\s]{1,}$"); //letters, whitespace and more than 0 chars
-        //    return regex.IsMatch(text);
         //}
         private static bool IsTitleAllowed(string text)
         {
             Regex regex = new Regex(@"^[a-zA-Z0-9]{1,}$"); //letters, whitespace and more than 0 chars
             return regex.IsMatch(text);
-        }
-
-        private static async void DisplayErrorDialog(string message)
-        {
-            var dialog = new Windows.UI.Popups.MessageDialog(message);
-            await dialog.ShowAsync();
-
         }
     }
 }

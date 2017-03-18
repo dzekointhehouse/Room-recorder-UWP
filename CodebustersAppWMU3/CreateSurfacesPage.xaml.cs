@@ -64,7 +64,9 @@ namespace CodebustersAppWMU3
             if (photo != null)
             {
                 // Assign photo to currentRoom -> current surface -> room photo
-                _currentRoom.Surfaces[_currSurface].SurfaceImage = photo;
+               // _currentRoom.Surfaces[_currSurface].SurfaceImage = photo;
+               _photoService.SavePhoto(photo, _currentRoom.Title, _currSurface, _currentRoom.Surfaces[_currSurface]);
+
             }
         }
 
@@ -122,7 +124,9 @@ namespace CodebustersAppWMU3
                 }
 
                 SwipeBlock.Text = SurfaceOptions.SurfaceSide(_currSurface);
-                BitmapImage img = await _photoService.CheckIfPictureExist(_currentRoom.Title, _currSurface, this.BaseUri);
+
+                // Converting from bytearray to BitmapImage and showing it.
+                BitmapImage img = await CameraServices.ToBitmapImage(_currentRoom.Surfaces[_currSurface].SurfaceImage, this.BaseUri);
                 SurfaceImage.Source = img;
 
             };

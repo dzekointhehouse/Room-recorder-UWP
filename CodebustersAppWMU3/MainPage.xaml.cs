@@ -4,6 +4,9 @@ using Windows.Devices.Sensors;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using CodebustersAppWMU3.Models;
+using CodebustersAppWMU3.Services;
+
 // Required to access the core dispatcher object
 
 // Required to access the sensor platform and the compass
@@ -62,6 +65,22 @@ namespace CodebustersAppWMU3
         private void NewRoom_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Frame.Navigate(typeof(CreateRoomPage));
+        }
+
+        private void ExistingRoom_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var name = RoomNameBox.Text;
+
+            Room room = DatabaseRepository.GetRoom(name);
+
+            if (room != null)
+            {
+                Frame.Navigate(typeof(CreateSurfacesPage), room);
+            }
+            else
+            {
+                ErrorMessage.DisplayErrorDialog("Room not found.");
+            }
         }
         //private void Existing_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
 

@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using SQLite.Net.Attributes;
 
 namespace CodebustersAppWMU3.Models
 {
-    class Surface
+    public class Surface
     {
-        public StorageFile SurfaceImage { get; set; }
+        public int SurfaceId { get; set; }
+        public byte[] SurfaceImage { get; set; }
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
         // public double Area { get; set; }
