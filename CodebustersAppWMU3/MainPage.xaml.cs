@@ -51,7 +51,7 @@ namespace CodebustersAppWMU3
             //    _compass.ReportInterval = reportInterval;
             //    _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
             //}            
-            GetCoordinate();  
+           // GetCoordinate();  
         }
         public async void GetCoordinate()
         {

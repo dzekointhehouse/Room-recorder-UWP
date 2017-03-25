@@ -9,12 +9,14 @@ namespace CodebustersAppWMU3.Models
 {
     public class Room
     {
+
         public int RoomId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public double Longt { get; set; }
         public double Lat { get; set; }
-        public List<Surface> Surfaces { get; set; } = new List<Surface>();
-        public double Volume { get; set; }   
+        public List<Surface> Surfaces { get; set; } = new List<Surface> { new Surface(), new Surface(), new Surface(), new Surface(), new Surface(), new Surface()};
+        public double Volume { get; set; } = 0;
+
     }
 }

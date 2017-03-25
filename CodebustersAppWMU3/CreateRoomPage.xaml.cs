@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CodebustersAppWMU3.Models;
 using CodebustersAppWMU3.Services;
+using Microsoft.EntityFrameworkCore;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -55,7 +56,6 @@ namespace CodebustersAppWMU3
 
                     LatiValue.Text = myposition.Position.Latitude.ToString();
                     LongtValue.Text = myposition.Position.Longitude.ToString();
-
                     break;
 
                 case GeolocationAccessStatus.Denied:
@@ -97,7 +97,7 @@ namespace CodebustersAppWMU3
                 return;
             }
 
-            //// Check if title already exists!
+            // Check if title already exists!
 
             if (!IsTitleAllowed(Title.Text))
             {
