@@ -37,7 +37,7 @@ namespace CodebustersAppWMU3
             using (var db = new RoomDbContext())
             {
                 //temporarly
-                //db.Database.EnsureDeleted();
+                db.Database.EnsureDeleted();
                 db.Database.Migrate();
                 
             }

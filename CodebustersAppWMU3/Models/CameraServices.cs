@@ -46,8 +46,8 @@ namespace CodebustersAppWMU3.Models
 
             // Store photo in room object
             currentRoom.Surfaces[currIndex].SurfaceImage = bytesImg;
-            // Update whole room?
-            DatabaseRepository.UpdateSurface(currentRoom, currIndex);
+            // Update surface
+            DatabaseRepository.UpdateSurface(currentRoom.Surfaces[currIndex]);
         }
 
         public async Task<BitmapImage> CheckIfPictureExist(string roomTitle, int surface, Uri baseUri)
@@ -132,9 +132,9 @@ namespace CodebustersAppWMU3.Models
         public static async Task<BitmapImage> ReadImageFromDb(Room currentRoom, int currentSurface, Uri baseUri)
         {
 
-            Room room = DatabaseRepository.GetRoom(currentRoom);
+            //currentRoom = DatabaseRepository.GetRoom(currentRoom);
             
-            BitmapImage img = await ToBitmapImage(room.Surfaces[currentSurface].SurfaceImage);
+            BitmapImage img = await ToBitmapImage(currentRoom.Surfaces[currentSurface].SurfaceImage);
 
             if (img == null)
             {

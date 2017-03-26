@@ -82,9 +82,14 @@ namespace CodebustersAppWMU3
 
         }
 
+        /*
+         * Here is the interesting part for creating new rooms. We start of by checking if we 
+         * have gotten our location values, If we have then we continue on to check the input
+         * values and try to create the room. We get an status message back from the database
+         * if successful or else not (null).
+         */
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 // Get position values.
@@ -96,9 +101,7 @@ namespace CodebustersAppWMU3
                 // Do nothing if incorrect position values!
                 return;
             }
-
             // Check if title already exists!
-
             if (!IsTitleAllowed(Title.Text))
             {
                 ErrorMessage.DisplayErrorDialog("Please, check yo title again!");
@@ -110,7 +113,6 @@ namespace CodebustersAppWMU3
                 ErrorMessage.DisplayErrorDialog("Please, check yo description again!");
                 return;
             }
-
             var newRoom = new Room()
             {
                 Title = Title.Text,
@@ -118,24 +120,17 @@ namespace CodebustersAppWMU3
                 Longt = double.Parse(LongtValue.Text),
                 Lat = double.Parse(LatiValue.Text)
             };
-            using (var db = new RoomDbContext())
+            var room = DatabaseRepository.CreateRoom(newRoom);
+            if (room != null)
             {
-                // Don't have Id, so this was the first I came up with to do.
-                if (db.Rooms.FirstOrDefault(g => g.Title == newRoom.Title) == null)
-                {
-                    db.Rooms.Add(newRoom);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    ErrorMessage.DisplayErrorDialog("Room name is taken!");
-                    return;
-                }
-                
+                Frame.Navigate(typeof(CreateSurfacesPage), newRoom);
             }
-            Frame.Navigate(typeof(CreateSurfacesPage), newRoom);
+            else
+            {
+                ErrorMessage.DisplayErrorDialog("Error, room probably already exists!");
+            }
+            
         }
-        //}
         private static bool IsTitleAllowed(string text)
         {
             Regex regex = new Regex(@"^[a-zA-Z0-9]{1,}$"); //letters, whitespace and more than 0 chars
