@@ -10,7 +10,7 @@
     <Grid x:Name="LayoutRoot">
         <Image Source="Assets/black.jpg" Stretch="Fill"></Image>
         <TextBox x:Name="Title" Margin="31,332,31,0" TextWrapping="Wrap" Text="Surface Title" VerticalAlignment="Top" />
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
             <TextBox x:Name="Description" Margin="31,364,31,0" TextWrapping="Wrap" Text="Detailed Description" VerticalAlignment="Top" Height="166"/>
         </ScrollViewer>
         <Button x:Name="UpdateBtn" Content="Update" Margin="194,0,31,42" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="DarkGreen" Height="32" Click="UpdateBtn_Click"/>

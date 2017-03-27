@@ -44,7 +44,7 @@ namespace CodebustersAppWMU3
         }
 
 
-        protected override void OnNavigatedTo(NavigationEventArgs eventArgs)
+        protected override async void OnNavigatedTo(NavigationEventArgs eventArgs)
         {
 
 
@@ -53,6 +53,11 @@ namespace CodebustersAppWMU3
                 _photoService = new CameraServices();
                 _currentRoom = (Room) eventArgs.Parameter;
                 TitleBlock.Text = _currentRoom.Title;
+
+                Byte[] b = _currentRoom.Surfaces[App._currSurface].SurfaceImage;
+                var img = await CameraServices.ToBitmapImage(b);
+
+                SurfaceImage.Source = img;
             }
 
 
@@ -134,16 +139,8 @@ namespace CodebustersAppWMU3
                 // Converting from bytearray to BitmapImage and showing it.
                 // BitmapImage img = await CameraServices.ReadImageFromDb(_currentRoom, _currSurface, this.BaseUri);
                 Byte[] b = _currentRoom.Surfaces[App._currSurface].SurfaceImage;
-                BitmapImage img;
-                if (b == null)
-                {
-                    img = new BitmapImage(new Uri(this.BaseUri, "/Assets/Square150x150Logo.scale-200.png"));
+                var img = await CameraServices.ToBitmapImage(b);
 
-                }
-                else
-                {
-                    img = await CameraServices.ToBitmapImage(b);
-                }
                 SurfaceImage.Source = img;
             };
         }
