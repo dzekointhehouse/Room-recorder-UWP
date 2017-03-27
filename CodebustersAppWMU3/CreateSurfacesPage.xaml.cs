@@ -30,7 +30,7 @@ namespace CodebustersAppWMU3
     /// </summary>
     public sealed partial class CreateSurfacesPage : Page
     {
-        private int _currSurface;
+
         private Room _currentRoom;
         private CameraServices _photoService;
         private enum Sides { Left = 0, Front, Right, Back};
@@ -39,7 +39,8 @@ namespace CodebustersAppWMU3
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             SwipeConfiguration();
-            SwipeBlock.Text = SurfaceOptions.SurfaceSide(_currSurface);
+            SwipeBlock.Text = SurfaceOptions.SurfaceSide(App._currSurface);
+
         }
 
 
@@ -67,7 +68,7 @@ namespace CodebustersAppWMU3
                 SurfaceImage.Source = await CameraServices.AsBitmapImage(photo);
                 // Assign photo to currentRoom -> current surface -> room photo
                 //_currentRoom.Surfaces[_currSurface].SurfaceImage = photo;
-                _photoService.SavePhoto(photo, _currentRoom, _currSurface);
+                _photoService.SavePhoto(photo, _currentRoom, App._currSurface);
 
             }
         }
@@ -95,44 +96,44 @@ namespace CodebustersAppWMU3
 
                 if (x1 > x2 && horizontal > vertical)
                 {
-                    if (_currSurface != 0)
+                    if (App._currSurface != 0)
                     {
-                        _currSurface--;
+                        App._currSurface--;
                     }
                     else
                     {
-                        _currSurface = 3;
+                        App._currSurface = 3;
                     }
                 }
                 else if (x1 < x2 && horizontal > vertical)
                 {
-                    if (_currSurface < 3)
+                    if (App._currSurface < 3)
                     {
-                        _currSurface++;
+                        App._currSurface++;
                     }
                     else
                     {
-                        _currSurface = 0;
+                        App._currSurface = 0;
                     }
                 }
                 else if (y1 > y2 && horizontal < vertical)
                 {
-                    _currSurface = 4;
+                    App._currSurface = 4;
 
                 }
                 else if (y1 < y2 && horizontal < vertical)
                 {
-                    _currSurface = 5;
+                    App._currSurface = 5;
                 }
 
-                SwipeBlock.Text = SurfaceOptions.SurfaceSide(_currSurface);
+                SwipeBlock.Text = SurfaceOptions.SurfaceSide(App._currSurface);
 
                 // Update the current room
                 _currentRoom = DatabaseRepository.GetRoom(_currentRoom.Title);
                 Console.Write(_currentRoom.Title);
                 // Converting from bytearray to BitmapImage and showing it.
                 // BitmapImage img = await CameraServices.ReadImageFromDb(_currentRoom, _currSurface, this.BaseUri);
-                Byte[] b = _currentRoom.Surfaces[_currSurface].SurfaceImage;
+                Byte[] b = _currentRoom.Surfaces[App._currSurface].SurfaceImage;
                 BitmapImage img;
                 if (b == null)
                 {

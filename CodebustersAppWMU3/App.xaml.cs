@@ -25,6 +25,7 @@ namespace CodebustersAppWMU3
     /// </summary>
     sealed partial class App : Application
     {
+        public static int _currSurface;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -36,8 +37,8 @@ namespace CodebustersAppWMU3
 
             using (var db = new RoomDbContext())
             {
-                //temporarly
-                db.Database.EnsureDeleted();
+                //temporarly for deleting stuff
+                //db.Database.EnsureDeleted();
                 db.Database.Migrate();
                 
             }

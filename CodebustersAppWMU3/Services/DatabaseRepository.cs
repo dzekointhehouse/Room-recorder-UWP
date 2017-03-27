@@ -97,7 +97,8 @@ namespace CodebustersAppWMU3.Services
             {
                 try
                 {
-                    Room dbRoom = db.Rooms.Find(room);
+                    // Tror inte denna funkar riktigt
+                    Room dbRoom = db.Rooms.Find(room.RoomId);
                     int i=0;
                     foreach (var surf in room.Surfaces)
                     {
