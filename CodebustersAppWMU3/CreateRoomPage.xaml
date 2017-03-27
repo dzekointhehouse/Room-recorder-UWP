@@ -9,11 +9,25 @@
 
     <Grid x:Name="LayoutRoot">
         <Image Source="Assets/black.jpg" Stretch="Fill"></Image>
-        <TextBox x:Name="Title" Margin="31,212,31,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" />
-        <TextBox x:Name="Description" Margin="31,270,31,0" TextWrapping="Wrap" Text="Detailed Description" VerticalAlignment="Top" Height="260"/>
-        <Button x:Name="CreateBtn" Content="Create Room" Margin="194,0,31,42" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="DarkGreen" Height="32" Click="CreateBtn_Click"/>
-        <TextBlock x:Name="Latitude"  Foreground="DarkGreen" HorizontalAlignment="Left" Margin="31,143,0,0" TextWrapping="Wrap" Text="Lat" VerticalAlignment="Top"/>
-        <TextBlock x:Name="Longitude"  Foreground="DarkGreen" HorizontalAlignment="Left" Margin="31,168,0,0" TextWrapping="Wrap" Text="Long" VerticalAlignment="Top"/>
+        <Canvas Height="36" VerticalAlignment="Top">
+            <Canvas.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="#FF363636" Offset="1"/>
+                </LinearGradientBrush>
+            </Canvas.Background>
+            <TextBlock x:Name="TitleBlock" Foreground="White"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="New room" VerticalAlignment="Top" Height="30" Width="200" FontSize="18" FontWeight="Bold" Canvas.Left="10"/>
+          </Canvas>
+        <TextBox x:Name="Title" Margin="31,233,31,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" />
+        <TextBox x:Name="Description" Margin="31,270,31,0" TextWrapping="Wrap" Text="Detailed Description" Height="260" VerticalAlignment="Top"/>
+        <Button x:Name="CreateBtn" Content="Create Room" Margin="31,0,31,42" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="DarkGreen" Height="32" Click="CreateBtn_Click" Foreground="White"/>
+        <TextBlock x:Name="Latitude"  Foreground="Red" HorizontalAlignment="Left" Margin="31,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="82">
+            <Run Text="Latitude"/>
+
+        </TextBlock>
+        <TextBlock x:Name="Longitude"  Foreground="Red" HorizontalAlignment="Left" Margin="31,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82">
+            <Run Text="Longitude"/>
+        </TextBlock>
         <TextBlock x:Name="LongtValue" 
                    HorizontalAlignment="Left" 
                    Margin="113,168,0,0" 
@@ -28,6 +42,6 @@
                    Text="" 
                    VerticalAlignment="Top" 
                    Foreground="White"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Foreground="DarkGreen" Margin="31,118,0,0" TextWrapping="Wrap" Text="Location" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Foreground="White" Margin="31,118,0,0" TextWrapping="Wrap" Text="Location" VerticalAlignment="Top"/>
     </Grid>
 </Page>

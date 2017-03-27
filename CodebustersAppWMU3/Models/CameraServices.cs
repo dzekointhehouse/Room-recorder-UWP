@@ -42,7 +42,7 @@ namespace CodebustersAppWMU3.Models
 
         public async void SavePhoto(StorageFile photo, Room currentRoom, int currIndex)
         {
-            Byte[] bytesImg = await AsByteArray(photo);
+            Byte[] bytesImg = await ToByteArray(photo);
 
             // Store photo in room object
             currentRoom.Surfaces[currIndex].SurfaceImage = bytesImg;
@@ -80,12 +80,12 @@ namespace CodebustersAppWMU3.Models
 
             }
         }
-
-        public static async Task<byte[]> AsByteArray(StorageFile file)
+        // Convert Storage file to byte array
+        public static async Task<byte[]> ToByteArray(StorageFile file)
         {
             IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read);
             var reader = new Windows.Storage.Streams.DataReader(fileStream.GetInputStreamAt(0));
-            await reader.LoadAsync((uint)fileStream.Size);
+            await reader.LoadAsync((uint) fileStream.Size);
 
             byte[] pixels = new byte[fileStream.Size];
 
@@ -96,53 +96,83 @@ namespace CodebustersAppWMU3.Models
 
         public static async Task<BitmapImage> ToBitmapImage(Byte[] byteArray)
         {
-            if (byteArray != null)
+            try
             {
-                using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
+                if (byteArray != null)
                 {
-                    // Writes the image byte array in an InMemoryRandomAccessStream
-                    // that is needed to set the source of BitmapImage.
-                    using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
+                    using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
                     {
-                        writer.WriteBytes(byteArray);
-                        await writer.StoreAsync();
+                        // Writes the image byte array in an InMemoryRandomAccessStream
+                        // that is needed to set the source of BitmapImage.
+                        using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
+                        {
+                            writer.WriteBytes(byteArray);
+                            await writer.StoreAsync();
+                        }
+
+                        var image = new BitmapImage();
+                        await image.SetSourceAsync(ms);
+                        return image;
                     }
-
-                    var image = new BitmapImage();
-                    await image.SetSourceAsync(ms);
-
-                    return image;
                 }
+                return null;
             }
-            else
+            catch
             {
                 return null;
             }
 
         }
 
-        public static async Task<BitmapImage> AsBitmapImage(StorageFile file)
+        /* For Converting StorageFiles to BitmapImage */
+        public static async Task<BitmapImage> ToBitmapImage(StorageFile file)
         {
-            var stream = await file.OpenAsync(FileAccessMode.Read);
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(stream);
-            return bitmapImage;
+            try
+            {
+                var stream = await file.OpenAsync(FileAccessMode.Read);
+                var bitmapImage = new BitmapImage();
+                await bitmapImage.SetSourceAsync(stream);
+                return bitmapImage;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public static async Task<BitmapImage> ReadImageFromDb(Room currentRoom, int currentSurface, Uri baseUri)
-        {
+    //public static async Task<BitmapImage> ReadImageFromDb(Room currentRoom, int currentSurface, Uri baseUri)
+    //    {
 
-            //currentRoom = DatabaseRepository.GetRoom(currentRoom);
+    //        //currentRoom = DatabaseRepository.GetRoom(currentRoom);
             
-            BitmapImage img = await ToBitmapImage(currentRoom.Surfaces[currentSurface].SurfaceImage);
+    //        BitmapImage img = await ToBitmapImage(currentRoom.Surfaces[currentSurface].SurfaceImage);
 
-            if (img == null)
+    //        if (img == null)
+    //        {
+    //            // Creates an bitmapimage for the page using this class. It needs the baseuri from the page and asset image.
+    //            // This is returned if no image is found.
+    //            img = new BitmapImage(new Uri(baseUri, "/Assets/Square150x150Logo.scale-200.png"));
+    //        }
+    //        return img;
+    //    }
+
+        /* This method is used for getting existing images from phone.
+         * It works like a charm, ofcourse it is asynchronous because there can
+         * be a load time and we don't want to freeze the rest of the application 
+         */
+        public static async Task<StorageFile> ExistingPhotosLibrary()
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
             {
-                // Creates an bitmapimage for the page using this class. It needs the baseuri from the page and asset image.
-                // This is returned if no image is found.
-                img = new BitmapImage(new Uri(baseUri, "/Assets/Square150x150Logo.scale-200.png"));
-            }
-            return img;
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary
+            };
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+            return file;
         }
     }
 }

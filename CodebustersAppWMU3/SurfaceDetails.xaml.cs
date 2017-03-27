@@ -40,11 +40,11 @@ namespace CodebustersAppWMU3
             {
                 _currentRoom = (Room)e.Parameter;
                 // Load Surface Title
-                Title.Text = _currentRoom.Surfaces[App._currSurface].Title;
+                Title.Text = _currentRoom.Surfaces[App.CurrSurface].Title;
                 // Load Description
-                Description.Text = _currentRoom.Surfaces[App._currSurface].Description;
+                Description.Text = _currentRoom.Surfaces[App.CurrSurface].Description;
                 // Load Image to description page
-                BitmapImage img = await CameraServices.ToBitmapImage(_currentRoom.Surfaces[App._currSurface].SurfaceImage);
+                BitmapImage img = await CameraServices.ToBitmapImage(_currentRoom.Surfaces[App.CurrSurface].SurfaceImage);
                 SurfaceImage.Source = img;
 
             }
@@ -53,11 +53,26 @@ namespace CodebustersAppWMU3
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             // Update new Values to DB and go back to previous page
-            _currentRoom.Surfaces[App._currSurface].Title = Title.Text;
-            _currentRoom.Surfaces[App._currSurface].Description = Description.Text;
-            DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App._currSurface]);
+            _currentRoom.Surfaces[App.CurrSurface].Title = Title.Text;
+            _currentRoom.Surfaces[App.CurrSurface].Description = Description.Text;
+            DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
             // Save then go back
             this.Frame.Navigate(typeof(CreateSurfacesPage), _currentRoom);
+        }
+
+        private async void ExistingPhotoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile imageFile = await CameraServices.ExistingPhotosLibrary();
+            BitmapImage image = await CameraServices.ToBitmapImage(imageFile);
+            if (image != null)
+            {
+                // Show the image
+                SurfaceImage.Source = image;
+                // Add to the current room object
+                _currentRoom.Surfaces[App.CurrSurface].SurfaceImage = await CameraServices.ToByteArray(imageFile);
+                // Update surface
+                DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
+            }
         }
     }
 }
