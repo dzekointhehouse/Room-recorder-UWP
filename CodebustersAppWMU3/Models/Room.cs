@@ -15,7 +15,7 @@ namespace CodebustersAppWMU3.Models
         public string Description { get; set; }
         public double Longt { get; set; }
         public double Lat { get; set; }
-        public List<Surface> Surfaces { get; set; } = new List<Surface> { new Surface(), new Surface(), new Surface(), new Surface(), new Surface(), new Surface()};
+        public List<Surface> Surfaces { get; set; }
         public double Volume { get; set; } = 0;
 
     }

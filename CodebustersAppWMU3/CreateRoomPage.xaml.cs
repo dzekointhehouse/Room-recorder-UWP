@@ -113,17 +113,12 @@ namespace CodebustersAppWMU3
                 ErrorMessage.DisplayErrorDialog("Please, check yo description again!");
                 return;
             }
-            var newRoom = new Room()
-            {
-                Title = Title.Text,
-                Description = Description.Text,
-                Longt = double.Parse(LongtValue.Text),
-                Lat = double.Parse(LatiValue.Text)
-            };
-            var room = DatabaseRepository.CreateRoom(newRoom);
+
+            var room = DatabaseRepository.CreateRoom(Title.Text, Description.Text, 
+                0.0, double.Parse(LatiValue.Text), double.Parse(LongtValue.Text));
             if (room != null)
             {
-                Frame.Navigate(typeof(CreateSurfacesPage), newRoom);
+                Frame.Navigate(typeof(CreateSurfacesPage), room);
             }
             else
             {

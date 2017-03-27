@@ -82,10 +82,6 @@ namespace CodebustersAppWMU3
                 ErrorMessage.DisplayErrorDialog("Room not found.");
             }
         }
-        //private void Existing_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-
-        //    Frame.Navigate(typeof(ExistingRoomPage));
-        //}
     }
     }
 

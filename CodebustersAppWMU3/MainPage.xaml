@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="LayoutRoot" Background="#FF0C0C0C">
+    <Grid x:Name="LayoutRoot">
+        <Image Source="Assets/black.jpg" Stretch="Fill"></Image>
         <Button x:Name="NewRoom" Content="New Room" HorizontalAlignment="Stretch" Margin="102,404,108,0" VerticalAlignment="Top" Background="DarkGreen" Click="NewRoom_Click"/>
         <Button x:Name="ExistingRoom" Content="Existing room" HorizontalAlignment="Stretch" Margin="102,501,108,0" VerticalAlignment="Top" Background="DarkGreen" Click="ExistingRoom_Click"/>
         <Image x:Name="Picture" Height="216" Margin="10,123,10,0" VerticalAlignment="Top" Source="Assets/room.jpg"/>

@@ -94,7 +94,7 @@ namespace CodebustersAppWMU3.Models
             return pixels;
         }
 
-        public static async Task<BitmapImage> ToBitmapImage(byte[] byteArray)
+        public static async Task<BitmapImage> ToBitmapImage(Byte[] byteArray)
         {
             if (byteArray != null)
             {

@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Migrations\RoomDbContextModelSnapshot.cs" />
     <Compile Include="Models\CameraServices.cs" />
+    <Compile Include="Models\RoomConstants.cs" />
     <Compile Include="Services\DatabaseRepository.cs" />
     <Compile Include="Services\ErrorMessage.cs" />
     <Compile Include="Services\RoomDbContext.cs" />
@@ -128,6 +129,7 @@
     <None Include="CodebustersAppWMU3_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\black.jpg" />
     <Content Include="Assets\room.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

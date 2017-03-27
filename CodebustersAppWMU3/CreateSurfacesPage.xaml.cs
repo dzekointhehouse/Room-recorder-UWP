@@ -128,12 +128,22 @@ namespace CodebustersAppWMU3
                 SwipeBlock.Text = SurfaceOptions.SurfaceSide(_currSurface);
 
                 // Update the current room
-                _currentRoom = DatabaseRepository.GetRoom(_currentRoom);
+                _currentRoom = DatabaseRepository.GetRoom(_currentRoom.Title);
+                Console.Write(_currentRoom.Title);
                 // Converting from bytearray to BitmapImage and showing it.
-                BitmapImage img = await CameraServices.ReadImageFromDb(_currentRoom, _currSurface, this.BaseUri);
-                if(img == null) img = new BitmapImage(new Uri(this.BaseUri, "/Assets/Square150x150Logo.scale-200.png"));
-                SurfaceImage.Source = img;
+                // BitmapImage img = await CameraServices.ReadImageFromDb(_currentRoom, _currSurface, this.BaseUri);
+                Byte[] b = _currentRoom.Surfaces[_currSurface].SurfaceImage;
+                BitmapImage img;
+                if (b == null)
+                {
+                    img = new BitmapImage(new Uri(this.BaseUri, "/Assets/Square150x150Logo.scale-200.png"));
 
+                }
+                else
+                {
+                    img = await CameraServices.ToBitmapImage(b);
+                }
+                SurfaceImage.Source = img;
             };
         }
 

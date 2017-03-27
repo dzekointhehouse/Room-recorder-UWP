@@ -11,34 +11,39 @@ namespace CodebustersAppWMU3.Services
     class DatabaseRepository
     {
         // For Existing rooms page
-        public static Room GetRoom(string title)
-        {
-            using (var db = new RoomDbContext())
-            {
-                // navigate an association between two entity types, 
-                // and loading the related Navigation properties is 
-                // achieved by use of the Include method.
-                return (from room in db.Rooms
-                    where room.Title.Equals(title)
-                    select room).Include(s => s.Surfaces).FirstOrDefault();
-            }
-        }
 
-        public static Room CreateRoom(Room currentRoom)
+        public static Room CreateRoom(string title, string description, double volume, double lat, double longt)
         {
             using (var db = new RoomDbContext())
             {
-                if (db.Rooms.FirstOrDefault(g => g.Title == currentRoom.Title) == null)
+                if (db.Rooms.FirstOrDefault(g => g.Title == title) == null)
                 {
-                    db.Rooms.Add(currentRoom);
-                    foreach (var surface in currentRoom.Surfaces)
+                    Room currentroom = new Room
                     {
-                        db.Surfaces.Add(surface);
+                        Title = title,
+                        Description = description,
+                        Lat = lat,
+                        Longt = longt,
+                        Volume = volume,
+                        Surfaces = new List<Surface>()
+                        {
+                            new Surface(),
+                            new Surface(),
+                            new Surface(),
+                            new Surface(),
+                            new Surface(),
+                            new Surface()
+                        }
+                    };
+                    db.Rooms.Add(currentroom);
+                    foreach (var surf in currentroom.Surfaces)
+                    {
+                        db.Surfaces.Add(surf);
                     }
                     db.SaveChanges();
 
-                    // Return the updated room
-                    return GetRoom(currentRoom);
+                    // Return the new room
+                    return GetRoom(currentroom.Title);
                 }
                 else
                 {
@@ -48,52 +53,24 @@ namespace CodebustersAppWMU3.Services
             }
         }
 
-        public static Room GetRoom(Room currentRoom)
+        public static Room GetRoom(string title)
         {
             using (var db = new RoomDbContext())
             {
-                // navigate an association between two entity types, 
-                // and loading the related Navigation properties is 
-                // achieved by use of the Include method.
-                return (from room in db.Rooms
-                    where room.Title.Equals(currentRoom.Title)
-                    select room).Include(s => s.Surfaces).FirstOrDefault();
+                try
+                {
+                    Room room = db.Rooms.Where(b => b.Title == title)
+                        .Include(b => b.Surfaces)
+                        .FirstOrDefault();
+
+                    return room;
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
-
-        //public static void SaveRoomSurface(string title, int surface, Surface side)
-        //{
-        //    using (var db = new RoomDbContext())
-        //    {
-        //        var room = (from r in db.Rooms
-        //            where r.Title.Equals(title)
-        //            select r).FirstOrDefault();
-
-        //        room.Surfaces[surface] = side;
-
-        //        db.Update(room);
-        //        db.SaveChanges();
-        //    }
-        //}
-
-        //public static Surface GetSurface(Room currentRoom, string surfaceTitle)
-        //{
-        //    using (var db = new RoomDbContext())
-        //    {
-        //        return (from room in db.Rooms
-        //            where room.Title.Equals(currentRoom.Title)
-        //            select room.Surfaces.FirstOrDefault(s => s.Title == surfaceTitle)).FirstOrDefault();
-        //    }
-        //}
-
-        //public static void UpdateRoom(Room currentRoom)
-        //{
-        //    using (var db = new RoomDbContext())
-        //    {
-        //        db.Update(currentRoom);
-        //        db.SaveChanges();
-        //    }
-        //}
 
         public static void UpdateSurface(Surface currentSurface)
         {
@@ -101,10 +78,32 @@ namespace CodebustersAppWMU3.Services
             {
                 try
                 {
-                    var surface = db.Surfaces.Find(currentSurface.SurfaceId);
+                    Surface surface = db.Surfaces.Find(currentSurface.SurfaceId);
                     surface.Title = currentSurface.Title;
                     surface.Description = currentSurface.Description;
                     surface.SurfaceImage = currentSurface.SurfaceImage;
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    ErrorMessage.DisplayErrorDialog("Could not Update!");
+                }
+            }
+        }
+
+        public static void UpdateRoom(Room room)
+        {
+            using (var db = new RoomDbContext())
+            {
+                try
+                {
+                    Room dbRoom = db.Rooms.Find(room);
+                    int i=0;
+                    foreach (var surf in room.Surfaces)
+                    {
+                        dbRoom.Surfaces[i] = surf;
+                        i++;
+                    }
                     db.SaveChanges();
                 }
                 catch
