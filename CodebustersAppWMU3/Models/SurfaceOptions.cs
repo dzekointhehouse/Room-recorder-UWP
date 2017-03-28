@@ -15,11 +15,11 @@ namespace CodebustersAppWMU3.Models
             switch (side)
             {
                 case 0:
-                    return "Left";
+                    return "Right";
                 case 1:
                     return "Front";
                 case 2:
-                    return "Right";
+                    return "Left";
                 case 3:
                     return "Back";
                 case 4:
