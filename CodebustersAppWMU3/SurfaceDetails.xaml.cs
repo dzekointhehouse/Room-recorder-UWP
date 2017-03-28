@@ -63,7 +63,8 @@ namespace CodebustersAppWMU3
         
             DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
             // Save then go back
-            this.Frame.Navigate(typeof(CreateSurfacesPage), _currentRoom);
+            
+            
         }
 
         private async void ExistingPhotoBtn_Click(object sender, RoutedEventArgs e)
