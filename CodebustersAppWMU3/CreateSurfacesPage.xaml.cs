@@ -43,11 +43,8 @@ namespace CodebustersAppWMU3
 
         }
 
-
         protected override async void OnNavigatedTo(NavigationEventArgs eventArgs)
         {
-
-
             if (eventArgs.Parameter != null)
             {
                 _photoService = new CameraServices();
@@ -59,10 +56,7 @@ namespace CodebustersAppWMU3
 
                 SurfaceImage.Source = img;
             }
-
-
         }
-
    
         private async void CameraButton_Click(object sender, RoutedEventArgs e)
         {
@@ -135,12 +129,8 @@ namespace CodebustersAppWMU3
 
                 // Update the current room
                 _currentRoom = DatabaseRepository.GetRoom(_currentRoom.Title);
-                Console.Write(_currentRoom.Title);
                 // Converting from bytearray to BitmapImage and showing it.
-                // BitmapImage img = await CameraServices.ReadImageFromDb(_currentRoom, _currSurface, this.BaseUri);
-                Byte[] b = _currentRoom.Surfaces[App.CurrSurface].SurfaceImage;
-                var img = await CameraServices.ToBitmapImage(b);
-
+                var img = await CameraServices.ToBitmapImage(_currentRoom.Surfaces[App.CurrSurface].SurfaceImage);
                 SurfaceImage.Source = img;
             };
         }
