@@ -63,8 +63,19 @@ namespace CodebustersAppWMU3
         
             DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
             // Save then go back
-            
-            
+
+
+            //Returns to the previous page upon completion, without adding additional content on the stack.
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(CreateSurfacesPage), _currentRoom);
+            }
+
         }
 
         private async void ExistingPhotoBtn_Click(object sender, RoutedEventArgs e)
