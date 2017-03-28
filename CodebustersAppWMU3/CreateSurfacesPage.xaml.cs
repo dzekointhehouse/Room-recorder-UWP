@@ -60,7 +60,7 @@ namespace CodebustersAppWMU3
    
         private async void CameraButton_Click(object sender, RoutedEventArgs e)
         {
-            StorageFile photo = await _photoService.GetCamera();
+            StorageFile photo = await _photoService.TakePicture();
 
             if (photo != null)
             {

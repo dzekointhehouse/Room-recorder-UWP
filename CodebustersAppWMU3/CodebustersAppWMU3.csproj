@@ -113,6 +113,7 @@
     <Compile Include="Models\RoomConstants.cs" />
     <Compile Include="Services\DatabaseRepository.cs" />
     <Compile Include="Services\ErrorMessage.cs" />
+    <Compile Include="Services\LocationServie.cs" />
     <Compile Include="Services\RoomDbContext.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Surface.cs" />

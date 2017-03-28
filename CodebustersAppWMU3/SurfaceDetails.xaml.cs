@@ -29,6 +29,7 @@ namespace CodebustersAppWMU3
     public sealed partial class SurfaceDetails : Page
     {
         private Room _currentRoom;
+        private StorageFile _photo;
         public SurfaceDetails()
         {
             this.InitializeComponent();
@@ -50,14 +51,29 @@ namespace CodebustersAppWMU3
             }
         }
 
-        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        private async void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             // Update new Values to DB and go back to previous page
             _currentRoom.Surfaces[App.CurrSurface].Title = Title.Text;
             _currentRoom.Surfaces[App.CurrSurface].Description = Description.Text;
+            if (_photo != null)
+            {
+                _currentRoom.Surfaces[App.CurrSurface].SurfaceImage = await CameraServices.ToByteArray(_photo);
+            }
+        
             DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
             // Save then go back
-            this.Frame.Navigate(typeof(CreateSurfacesPage), _currentRoom);
+
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame.CanGoBack)
+            {
+                //By recreating the page the image can be updated immediately(if you just used
+                //go back once the image would not be visible before the first swipe).
+                //The double go back is to avoid creating redundant copies on the stack. 
+                rootFrame.GoBack();
+                rootFrame.GoBack();
+                this.Frame.Navigate(typeof(CreateSurfacesPage), _currentRoom);
+            }
         }
 
         private async void ExistingPhotoBtn_Click(object sender, RoutedEventArgs e)
@@ -66,12 +82,12 @@ namespace CodebustersAppWMU3
             BitmapImage image = await CameraServices.ToBitmapImage(imageFile);
             if (image != null)
             {
+                _photo = imageFile;
                 // Show the image
                 SurfaceImage.Source = image;
-                // Add to the current room object
-                _currentRoom.Surfaces[App.CurrSurface].SurfaceImage = await CameraServices.ToByteArray(imageFile);
-                // Update surface
-                DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
+                // Add to the current room object               
+                // Update surface if you want to do without save button
+               // DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
             }
         }
     }
