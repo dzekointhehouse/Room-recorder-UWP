@@ -6,6 +6,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using CodebustersAppWMU3.Models;
 using CodebustersAppWMU3.Services;
+using Windows.ApplicationModel.Background;
 
 // Required to access the core dispatcher object
 
@@ -19,6 +20,11 @@ namespace CodebustersAppWMU3
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        //SystemCondition userCondition = new SystemCondition(SystemConditionType.UserPresent);
+        //TimeTrigger quarterTimer = new TimeTrigger(15, false);
+        //BackgroundTaskRegistration task = new BackgroundTaskRegistration("something", "Background Coordinate", quarterTimer, userCondition);// varför funk inte?
+
+
         //private Compass _compass; // Our app' s compass object
 
         //// This event handler writes the current compass reading to
@@ -36,10 +42,25 @@ namespace CodebustersAppWMU3
         //            txtNorth.Text = "No reading.";
         //    });
         //}
-
+        bool taskRegistered = false;
         public MainPage()
         {
-            this.InitializeComponent();
+            var builder = new BackgroundTaskBuilder();
+            builder.Name = "LocationGetter";
+            builder.TaskEntryPoint = "GeoLocation.Class1";
+            builder.SetTrigger(new TimeTrigger(15,false));
+            //  builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
+            BackgroundTaskRegistration task = builder.Register();
+            foreach (var test in BackgroundTaskRegistration.AllTasks)
+            {
+                if (test.Value.Name == builder.Name)
+                {
+                    taskRegistered = true;
+                    break;
+                }
+            }
+            this.InitializeComponent();        
+
             //_compass = Compass.GetDefault(); // Get the default compass object
 
             //// Assign an event handler for the compass reading-changed event
@@ -51,7 +72,7 @@ namespace CodebustersAppWMU3
             //    _compass.ReportInterval = reportInterval;
             //    _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
             //}            
-           // GetCoordinate();  
+            // GetCoordinate();  
         }
         public async void GetCoordinate()
         {

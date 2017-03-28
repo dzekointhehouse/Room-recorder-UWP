@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Rooms>
+  <Room>
+    Title ="room1"
+    Details ="room1 test">
+  <wall>
+    Title = "Left"
+    Details = "Left wall"
+  </wall>
+      <wall>
+    Title = "Front"
+    Details = "Front wall"
+  </wall>
+  <wall>
+    Title = "Right"
+    Details = "Right wall"
+  </wall>
+  <wall>
+    Title = "Back"
+    Details = "Back wall"
+  </wall>
+      <wall>
+    Title = "Top"
+    Details = "Top wall"
+  </wall>
+  <wall>
+    Title = "Bottom"
+    Details = "Bottom wall"
+  </wall>
+  
+  </Room>
+</Rooms>

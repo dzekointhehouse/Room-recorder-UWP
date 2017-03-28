@@ -71,7 +71,22 @@ namespace CodebustersAppWMU3.Services
                 }
             }
         }
+        public static List<Room> GetRooms()
+        {
+            using (var db = new RoomDbContext())
+            {
+                try
+                {
+                  List<Room> rooms = db.Rooms.ToList();
 
+                    return rooms;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
         public static void UpdateSurface(Surface currentSurface)
         {
             using (var db = new RoomDbContext())
