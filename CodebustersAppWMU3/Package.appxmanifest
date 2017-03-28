@@ -21,7 +21,7 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="GeoLocation.Class1">
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.Class1">
           <BackgroundTasks>
             <Task Type="location" />
           </BackgroundTasks>

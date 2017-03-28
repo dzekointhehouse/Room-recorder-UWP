@@ -47,7 +47,7 @@ namespace CodebustersAppWMU3
         {
             var builder = new BackgroundTaskBuilder();
             builder.Name = "LocationGetter";
-            builder.TaskEntryPoint = "GeoLocation.Class1";
+            builder.TaskEntryPoint = "BackgroundTask.Class1";
             builder.SetTrigger(new TimeTrigger(15,false));
             //  builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
             BackgroundTaskRegistration task = builder.Register();
