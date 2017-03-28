@@ -64,18 +64,16 @@ namespace CodebustersAppWMU3
             DatabaseRepository.UpdateSurface(_currentRoom.Surfaces[App.CurrSurface]);
             // Save then go back
 
-
-            //Returns to the previous page upon completion, without adding additional content on the stack.
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame.CanGoBack)
             {
+                //By recreating the page the image can be updated immediately(if you just used
+                //go back once the image would not be visible before the first swipe).
+                //The double go back is to avoid creating redundant copies on the stack. 
                 rootFrame.GoBack();
-            }
-            else
-            {
+                rootFrame.GoBack();
                 this.Frame.Navigate(typeof(CreateSurfacesPage), _currentRoom);
             }
-
         }
 
         private async void ExistingPhotoBtn_Click(object sender, RoutedEventArgs e)
