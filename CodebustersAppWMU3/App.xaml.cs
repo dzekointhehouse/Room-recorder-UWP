@@ -136,10 +136,6 @@ namespace CodebustersAppWMU3
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            if (rootFrame.SourcePageType == typeof(CreateSurfacesPage))
-            {
-                rootFrame.Navigate(typeof(MainPage));
-            }
             if (rootFrame.CanGoBack)
             {
                 e.Handled = true;
