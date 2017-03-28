@@ -29,11 +29,11 @@ namespace CodebustersAppWMU3.Models
                     CreationCollisionOption.OpenIfExists);
         }
 
-        public async Task<StorageFile> GetCamera()
+        public async Task<StorageFile> TakePicture()
         {
             CameraCaptureUI captureUi = new CameraCaptureUI();
             captureUi.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
-            captureUi.PhotoSettings.CroppedSizeInPixels = new Size();
+            captureUi.PhotoSettings.CroppedSizeInPixels = new Size(100.0, 70.0);
 
             StorageFile photo = await captureUi.CaptureFileAsync(CameraCaptureUIMode.Photo);
 
@@ -71,21 +71,18 @@ namespace CodebustersAppWMU3.Models
             }
             catch
             {
-
                 // Creates an bitmapimage for the page using this class. It needs the baseuri from the page and asset image.
                 // This is returned if no image is found.
-
                 img = new BitmapImage(new Uri(baseUri, "/Assets/Square150x150Logo.scale-200.png"));
                 return img;
-
             }
         }
-        // Convert Storage file to byte array
+        /* Convert Storage file to byte array */
         public static async Task<byte[]> ToByteArray(StorageFile file)
         {
             IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read);
             var reader = new Windows.Storage.Streams.DataReader(fileStream.GetInputStreamAt(0));
-            await reader.LoadAsync((uint) fileStream.Size);
+            await reader.LoadAsync((uint)fileStream.Size);
 
             byte[] pixels = new byte[fileStream.Size];
 
@@ -109,7 +106,6 @@ namespace CodebustersAppWMU3.Models
                             writer.WriteBytes(byteArray);
                             await writer.StoreAsync();
                         }
-
                         var image = new BitmapImage();
                         await image.SetSourceAsync(ms);
                         return image;
@@ -121,7 +117,6 @@ namespace CodebustersAppWMU3.Models
             {
                 return null;
             }
-
         }
 
         /* For Converting StorageFiles to BitmapImage */
@@ -139,22 +134,6 @@ namespace CodebustersAppWMU3.Models
                 return null;
             }
         }
-
-    //public static async Task<BitmapImage> ReadImageFromDb(Room currentRoom, int currentSurface, Uri baseUri)
-    //    {
-
-    //        //currentRoom = DatabaseRepository.GetRoom(currentRoom);
-            
-    //        BitmapImage img = await ToBitmapImage(currentRoom.Surfaces[currentSurface].SurfaceImage);
-
-    //        if (img == null)
-    //        {
-    //            // Creates an bitmapimage for the page using this class. It needs the baseuri from the page and asset image.
-    //            // This is returned if no image is found.
-    //            img = new BitmapImage(new Uri(baseUri, "/Assets/Square150x150Logo.scale-200.png"));
-    //        }
-    //        return img;
-    //    }
 
         /* This method is used for getting existing images from phone.
          * It works like a charm, ofcourse it is asynchronous because there can

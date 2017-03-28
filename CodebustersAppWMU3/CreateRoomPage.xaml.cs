@@ -19,7 +19,6 @@ using CodebustersAppWMU3.Models;
 using CodebustersAppWMU3.Services;
 using Microsoft.EntityFrameworkCore;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CodebustersAppWMU3
 {
@@ -69,7 +68,9 @@ namespace CodebustersAppWMU3
             }
 
         }
-
+        /* Keeps track of the current phone position,
+         * updates when the position is changed.
+         */
         private async void OnPositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -107,15 +108,16 @@ namespace CodebustersAppWMU3
                 ErrorMessage.DisplayErrorDialog("Please, check yo title again!");
                 return;
             }
-
+            // If is empty
             if (Description.Text == "")
             {
                 ErrorMessage.DisplayErrorDialog("Please, check yo description again!");
                 return;
             }
-
-            var room = DatabaseRepository.CreateRoom(Title.Text, Description.Text, 
+            // Creates the room if it doesn't exist
+            var room = DatabaseRepository.CreateRoom(Title.Text, Description.Text,
                 0.0, double.Parse(LatiValue.Text), double.Parse(LongtValue.Text));
+            // Navigate to next page if successful
             if (room != null)
             {
                 Frame.Navigate(typeof(CreateSurfacesPage), room);
@@ -124,8 +126,11 @@ namespace CodebustersAppWMU3
             {
                 ErrorMessage.DisplayErrorDialog("Error, room probably already exists!");
             }
-            
+
         }
+        /* Used to make sure the text parameter matches the
+         * regex expression
+         */
         private static bool IsTitleAllowed(string text)
         {
             Regex regex = new Regex(@"^[a-zA-Z0-9]{1,}$"); //letters, whitespace and more than 0 chars
