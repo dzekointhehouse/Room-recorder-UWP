@@ -51,7 +51,7 @@ namespace CodebustersAppWMU3
             builder.TaskEntryPoint = "BackgroundTask.Class1";
             builder.SetTrigger(new TimeTrigger(15,false));
             //  builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
-            BackgroundTaskRegistration task = builder.Register();
+          
             foreach (var test in BackgroundTaskRegistration.AllTasks)
             {
                 if (test.Value.Name == builder.Name)
@@ -59,6 +59,10 @@ namespace CodebustersAppWMU3
                     taskRegistered = true;
                     break;
                 }
+            }
+            if (!taskRegistered)
+            {
+                BackgroundTaskRegistration task = builder.Register();
             }
             this.InitializeComponent();
             App.Current.Suspending += new Windows.UI.Xaml.SuspendingEventHandler(App_Suspending);
