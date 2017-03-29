@@ -59,7 +59,8 @@ namespace CodebustersAppWMU3
                     break;
                 }
             }
-            this.InitializeComponent();        
+            this.InitializeComponent();
+                    
 
             //_compass = Compass.GetDefault(); // Get the default compass object
 
