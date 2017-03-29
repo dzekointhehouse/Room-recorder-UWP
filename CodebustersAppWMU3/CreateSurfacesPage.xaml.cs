@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Imaging;
-using Windows.Media.Capture;
-using Windows.Storage;
-using Windows.Storage.Streams;
+using Windows.ApplicationModel;
 using Windows.UI.Xaml;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CodebustersAppWMU3.Models;
-using Windows.UI.Xaml.Media.Imaging;
 using CodebustersAppWMU3.Services;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -40,9 +27,32 @@ namespace CodebustersAppWMU3
             this.NavigationCacheMode = NavigationCacheMode.Required;
             SwipeConfiguration();
             SwipeBlock.Text = SurfaceOptions.SurfaceSide(App.CurrSurface);
+            Application.Current.Suspending += new SuspendingEventHandler(App_Suspending);
+            Application.Current.Resuming += new EventHandler<Object>(App_Resuming);
 
         }
 
+        private void App_Resuming(object sender, object e)
+        {
+            ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
+
+
+            
+
+            string title = (string) Appsettings.Values["CurrentPage"];
+            _currentRoom = DatabaseRepository.GetRoom(title);
+            
+            
+        }
+
+        private void App_Suspending(object sender, SuspendingEventArgs e)
+        {
+            //TODO = ALL THE CODE DAWG
+            ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
+            Appsettings.Values["CurrentPage"] = _currentRoom.Title;
+
+
+        }
         protected override async void OnNavigatedTo(NavigationEventArgs eventArgs)
         {
             if (eventArgs.Parameter != null)

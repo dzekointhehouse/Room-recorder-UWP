@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using CodebustersAppWMU3.Models;
 using CodebustersAppWMU3.Services;
 using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel;
 
 // Required to access the core dispatcher object
 
@@ -60,7 +61,7 @@ namespace CodebustersAppWMU3
                 }
             }
             this.InitializeComponent();
-                    
+            App.Current.Suspending += new Windows.UI.Xaml.SuspendingEventHandler(App_Suspending);
 
             //_compass = Compass.GetDefault(); // Get the default compass object
 
@@ -75,6 +76,12 @@ namespace CodebustersAppWMU3
             //}            
             // GetCoordinate();  
         }
+
+        private void App_Suspending(object sender, SuspendingEventArgs e)
+        {
+            //TODO = ALL THE CODE DAWG
+        }
+
         public async void GetCoordinate()
         {
             var locator = new Geolocator();
