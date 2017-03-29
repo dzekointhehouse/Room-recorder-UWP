@@ -15,45 +15,49 @@ using Windows.UI.Notifications;
 namespace BackgroundTask
 {
 
-        public sealed class Class1 : IBackgroundTask
+    public sealed class Class1 : IBackgroundTask
+    {
+
+        //   private CancellationTokenSource _cts = null;
+
+        //        ToastVisual visual = new ToastVisual()
+        //        {
+        //            BindingGeneric = new ToastBindingGeneric()
+        //            {
+        //                Children =
+        //            {
+        //            new AdaptiveText()
+        //            {
+        //            Text = title
+        //            },
+
+        //            new AdaptiveText()
+        //            {
+        //            Text = content
+        //            },
+
+        //new AdaptiveImage()
+        //{
+        //Source = image
+        //}
+        //},
+
+        //                AppLogoOverride = new ToastGenericAppLogo()
+        //                {
+        //                    Source = logo,
+        //                    HintCrop = ToastGenericAppLogoCrop.Circle
+        //                }
+        //            }
+        //        };
+
+        void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)
         {
-
-         //   private CancellationTokenSource _cts = null;
-
-            //        ToastVisual visual = new ToastVisual()
-            //        {
-            //            BindingGeneric = new ToastBindingGeneric()
-            //            {
-            //                Children =
-            //            {
-            //            new AdaptiveText()
-            //            {
-            //            Text = title
-            //            },
-
-            //            new AdaptiveText()
-            //            {
-            //            Text = content
-            //            },
-
-            //new AdaptiveImage()
-            //{
-            //Source = image
-            //}
-            //},
-
-            //                AppLogoOverride = new ToastGenericAppLogo()
-            //                {
-            //                    Source = logo,
-            //                    HintCrop = ToastGenericAppLogoCrop.Circle
-            //                }
-            //            }
-            //        };
-
-             void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)
-            {
             //BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
+            ToastNotifier();
 
+        }
+
+        void ToastNotifier() {
             ToastTemplateType toastTemplate = ToastTemplateType.ToastImageAndText01;
             Windows.Data.Xml.Dom.XmlDocument toastxml = ToastNotificationManager.GetTemplateContent(toastTemplate);
             Windows.Data.Xml.Dom.XmlNodeList toastTextElements = toastxml.GetElementsByTagName("text");
@@ -61,9 +65,8 @@ namespace BackgroundTask
             ToastNotification toast = new ToastNotification(toastxml);
 
             ToastNotificationManager.CreateToastNotifier().Show(toast);
-            }
 
-
+        }
 
         //try
 
