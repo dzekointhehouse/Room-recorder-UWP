@@ -7,7 +7,6 @@ using Windows.UI.Xaml.Controls;
 using CodebustersAppWMU3.Models;
 using CodebustersAppWMU3.Services;
 using Windows.ApplicationModel.Background;
-using Windows.ApplicationModel;
 
 // Required to access the core dispatcher object
 
@@ -43,49 +42,14 @@ namespace CodebustersAppWMU3
         //            txtNorth.Text = "No reading.";
         //    });
         //}
-        bool taskRegistered = false;
+
         public MainPage()
         {
-            var builder = new BackgroundTaskBuilder();
-            builder.Name = "LocationGetter";
-            builder.TaskEntryPoint = "BackgroundTask.Class1";
-            builder.SetTrigger(new TimeTrigger(15,false));
-            //  builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
-          
-            foreach (var test in BackgroundTaskRegistration.AllTasks)
-            {
-                if (test.Value.Name == builder.Name)
-                {
-                    taskRegistered = true;
-                    break;
-                }
-            }
-            if (!taskRegistered)
-            {
-                BackgroundTaskRegistration task = builder.Register();
-            }
+
             this.InitializeComponent();
-            App.Current.Suspending += new Windows.UI.Xaml.SuspendingEventHandler(App_Suspending);
-
-            //_compass = Compass.GetDefault(); // Get the default compass object
-
-            //// Assign an event handler for the compass reading-changed event
-            //if (_compass != null)
-            //{
-            //    // Establish the report interval for all scenarios
-            //    uint minReportInterval = _compass.MinimumReportInterval;
-            //    uint reportInterval = minReportInterval > 16 ? minReportInterval : 16;
-            //    _compass.ReportInterval = reportInterval;
-            //    _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
-            //}            
-            // GetCoordinate();  
+            RequestBackgroundAccess();
+            RegisterBackgroundTasks();
         }
-
-        private void App_Suspending(object sender, SuspendingEventArgs e)
-        {
-            //TODO = ALL THE CODE DAWG
-        }
-
         public async void GetCoordinate()
         {
             var locator = new Geolocator();
@@ -115,7 +79,57 @@ namespace CodebustersAppWMU3
                 ErrorMessage.DisplayErrorDialog("Room not found.");
             }
         }
+
+
+        private void RegisterBackgroundTasks()
+        {
+            bool taskRegistered = false;
+            var exampleTaskName = "LocationGetter";
+
+            // Check if the task already exists
+            foreach (var test in BackgroundTaskRegistration.AllTasks)
+            {
+                if (test.Value.Name == exampleTaskName)
+                {
+                    taskRegistered = true;
+                    break;
+                }
+            }
+            // If not registered, register it
+            if (!taskRegistered)
+            {
+                var builder = new BackgroundTaskBuilder();
+                builder.Name = "LocationGetter";
+                builder.TaskEntryPoint = "BackgroundTask.Class1";
+                builder.SetTrigger(new TimeTrigger(15, false));
+
+                var task = builder.Register();
+
+                // Completion handler
+                task.Completed += TaskRegistration_Completed;
+            }
+        }
+
+        private async void RequestBackgroundAccess()
+        {
+            var result = await BackgroundExecutionManager.RequestAccessAsync();
+
+            if (result == BackgroundAccessStatus.Denied)
+            {
+                //TODO
+                ErrorMessage.DisplayErrorDialog("Cannot Sense Room");
+            }
+        }
+
+        private void TaskRegistration_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+        {
+            //var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            //var key = task.TaskId.ToString();
+            //var message = settings.Values[key].ToString();
+            //UpdateUI(message);
+        }
     }
-    }
+
+}
 
 

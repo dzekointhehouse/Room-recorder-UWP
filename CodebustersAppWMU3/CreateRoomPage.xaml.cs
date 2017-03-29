@@ -38,6 +38,8 @@ namespace CodebustersAppWMU3
         {
             var accessStatus = await Geolocator.RequestAccessAsync();
 
+            try
+            {
 
             switch (accessStatus)
             {
@@ -49,7 +51,6 @@ namespace CodebustersAppWMU3
                     geolocator.PositionChanged += OnPositionChanged;
 
                     geolocator.PositionChanged += OnPositionChanged;
-                    geolocator.DesiredAccuracyInMeters = 1;
                     var position = await geolocator.GetGeopositionAsync();
                     var myposition = position.Coordinate.Point;
 
@@ -65,6 +66,12 @@ namespace CodebustersAppWMU3
                     ErrorMessage.DisplayErrorDialog("Some kind of error occured, please try again!");
                     Frame.Navigate(typeof(MainPage));
                     break;
+            }
+            }
+            catch (Exception e)
+            {
+                LatiValue.Text = "0.0";
+                LongtValue.Text = "0.0";
             }
 
         }
