@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
-        <Image Source="Assets/black.jpg" Stretch="Fill"></Image>
+        <Image Source="Assets/black.jpg" Stretch="Fill" Margin="0,-60,0,0"></Image>
 
         <Image x:Name="SurfaceImage" Height="259" Margin="31,68,31,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
 

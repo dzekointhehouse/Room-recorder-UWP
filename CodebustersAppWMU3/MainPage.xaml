@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
-        <Image Source="Assets/black.jpg" Stretch="UniformToFill"></Image>
+        <Image Source="Assets/black.jpg" Stretch="UniformToFill" Margin="0,-60,0,0"></Image>
         <Button x:Name="NewRoom" Content="New Room" HorizontalAlignment="Stretch" Margin="108,344,108,0" VerticalAlignment="Top" Background="#FF066B96" Click="NewRoom_Click" Foreground="White"/>
         <Button x:Name="ExistingRoom" Content="Existing room" HorizontalAlignment="Stretch" Margin="108,445,108,0" VerticalAlignment="Top" Background="#FF066B96" Click="ExistingRoom_Click" Foreground="White"/>
         <Image x:Name="Picture" Height="146" Margin="59,130,59,0" VerticalAlignment="Top" Source="Assets/room.jpg"/>

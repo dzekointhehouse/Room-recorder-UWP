@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CodebustersAppWMU3.Models;
+using CodebustersAppWMU3.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodebustersAppWMU3
@@ -71,6 +73,11 @@ namespace CodebustersAppWMU3
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
+                    ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
+
+                    string title = (string)Appsettings.Values["CurrentPage"];
+                    var _currentRoom = DatabaseRepository.GetRoom(title);
+                    rootFrame.Navigate(typeof(MainPage), _currentRoom);
                     //TODO: Load state from previously suspended application
                 }
 

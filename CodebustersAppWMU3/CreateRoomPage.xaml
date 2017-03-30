@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
-        <Image Source="Assets/black.jpg" Stretch="Fill"></Image>
+        <Image Source="Assets/black.jpg" Stretch="Fill" Margin="0,-60,0,0"></Image>
         <Canvas Height="36" VerticalAlignment="Top">
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

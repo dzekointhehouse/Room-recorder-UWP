@@ -36,12 +36,8 @@ namespace CodebustersAppWMU3
         {
             ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
 
-
-            
-
             string title = (string) Appsettings.Values["CurrentPage"];
             _currentRoom = DatabaseRepository.GetRoom(title);
-            
             
         }
 
