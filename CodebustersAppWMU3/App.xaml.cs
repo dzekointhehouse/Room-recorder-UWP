@@ -76,9 +76,8 @@ namespace CodebustersAppWMU3
                     ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
 
                     string title = (string)Appsettings.Values["CurrentPage"];
-                    var _currentRoom = DatabaseRepository.GetRoom(title);
-                    rootFrame.Navigate(typeof(MainPage), _currentRoom);
-                    //TODO: Load state from previously suspended application
+                    Room currentRoom = DatabaseRepository.GetRoom(title);
+                    rootFrame.Navigate(typeof(CreateSurfacesPage), currentRoom);
                 }
 
                 // Place the frame in the current Window

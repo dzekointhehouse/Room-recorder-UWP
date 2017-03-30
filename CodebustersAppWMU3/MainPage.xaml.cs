@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using CodebustersAppWMU3.Models;
 using CodebustersAppWMU3.Services;
 using Windows.ApplicationModel.Background;
+using Windows.UI.Xaml.Navigation;
 
 // Required to access the core dispatcher object
 
@@ -20,29 +21,6 @@ namespace CodebustersAppWMU3
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //SystemCondition userCondition = new SystemCondition(SystemConditionType.UserPresent);
-        //TimeTrigger quarterTimer = new TimeTrigger(15, false);
-        //BackgroundTaskRegistration task = new BackgroundTaskRegistration("something", "Background Coordinate", quarterTimer, userCondition);// varför funk inte?
-
-
-        //private Compass _compass; // Our app' s compass object
-
-        //// This event handler writes the current compass reading to
-        //// the textblocks on the app' s main page.
-
-        //private async void ReadingChanged(object sender, CompassReadingChangedEventArgs e)
-        //{
-        //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-        //    {
-        //        CompassReading reading = e.Reading;
-        //        txtMagnetic.Text = String.Format("{0,5:0.00}", reading.HeadingMagneticNorth);
-        //        if (reading.HeadingTrueNorth.HasValue)
-        //            txtNorth.Text = String.Format("{0,5:0.00}", reading.HeadingTrueNorth);
-        //        else
-        //            txtNorth.Text = "No reading.";
-        //    });
-        //}
-
         public MainPage()
         {
 
@@ -50,6 +28,23 @@ namespace CodebustersAppWMU3
             RequestBackgroundAccess();
             RegisterBackgroundTasks();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs eventArgs)
+        {
+            //if (eventArgs.Parameter != null)
+            //{
+            //    try
+            //    {
+            //        var currentRoom = (Room)eventArgs.Parameter;
+            //        Frame.Navigate(typeof(CreateSurfacesPage), currentRoom);
+            //    }
+            //    catch
+            //    {
+            //        // ignored
+            //    }
+            //}
+        }
+
         public async void GetCoordinate()
         {
             var locator = new Geolocator();
@@ -99,7 +94,7 @@ namespace CodebustersAppWMU3
             if (!taskRegistered)
             {
                 var builder = new BackgroundTaskBuilder();
-                builder.Name = "LocationGetter";
+                builder.Name = exampleTaskName;
                 builder.TaskEntryPoint = "BackgroundTask.Class1";
                 builder.SetTrigger(new TimeTrigger(15, false));
 
@@ -109,6 +104,8 @@ namespace CodebustersAppWMU3
                 task.Completed += TaskRegistration_Completed;
             }
         }
+
+       
 
         private async void RequestBackgroundAccess()
         {
@@ -123,10 +120,6 @@ namespace CodebustersAppWMU3
 
         private void TaskRegistration_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
         {
-            //var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            //var key = task.TaskId.ToString();
-            //var message = settings.Values[key].ToString();
-            //UpdateUI(message);
         }
     }
 
