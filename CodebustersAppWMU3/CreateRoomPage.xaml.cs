@@ -59,7 +59,8 @@ namespace CodebustersAppWMU3
                     break;
 
                 case GeolocationAccessStatus.Denied:
-                    Frame.Navigate(typeof(MainPage));
+                        ErrorMessage.DisplayErrorDialog("Location access denied");
+                        Frame.Navigate(typeof(MainPage));
                     break;
 
                 case GeolocationAccessStatus.Unspecified:
@@ -68,7 +69,7 @@ namespace CodebustersAppWMU3
                     break;
             }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 LatiValue.Text = "0.0";
                 LongtValue.Text = "0.0";

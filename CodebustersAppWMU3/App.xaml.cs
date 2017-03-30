@@ -74,12 +74,12 @@ namespace CodebustersAppWMU3
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     var appSettings = ApplicationData.Current.LocalSettings;
-                    var currentDate = DateTime.Now;
+                    var currentHour = DateTime.Now.Hour;
                     // Time limit on restoring current room.         
-                    var terminateDate = (DateTime?) appSettings.Values["TimeStamp"];
-                    if (currentDate.Hour - terminateDate?.Hour >= 2)
+                    var terminateHour = (int) appSettings.Values["TimeStamp"];
+                    if (currentHour - terminateHour >= 1)
                     {
-                       rootFrame.Navigate(typeof(CreateSurfacesPage));
+                       rootFrame.Navigate(typeof(MainPage));
                     }
                     else
                     {

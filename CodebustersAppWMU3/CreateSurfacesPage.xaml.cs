@@ -20,7 +20,6 @@ namespace CodebustersAppWMU3
 
         private Room _currentRoom;
         private CameraServices _photoService;
-        private enum Sides { Left = 0, Front, Right, Back};
         public CreateSurfacesPage()
         {
             this.InitializeComponent();
@@ -34,23 +33,19 @@ namespace CodebustersAppWMU3
 
         private void App_Resuming(object sender, object e)
         {
-            ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
+            ApplicationDataContainer appSettings = ApplicationData.Current.LocalSettings;
 
-            string title = (string)Appsettings.Values["CurrentPage"];
+            string title = (string)appSettings.Values["CurrentPage"];
             _currentRoom = DatabaseRepository.GetRoom(title);
            // ErrorMessage.DisplayErrorDialog("Resuming" + title);
         }
 
         private void App_Suspending(object sender, SuspendingEventArgs e)
         {
-            ////TODO = ALL THE CODE DAWG
-
             ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
             Appsettings.Values["CurrentPage"] = _currentRoom.Title;
-            Appsettings.Values["TimeStamp"] = DateTime.Now;
+            Appsettings.Values["TimeStamp"] = DateTime.Now.Hour ;
             ErrorMessage.DisplayErrorDialog("Suspending" + _currentRoom.Title);
-
-
         }
         protected override async void OnNavigatedTo(NavigationEventArgs eventArgs)
         {
@@ -60,7 +55,7 @@ namespace CodebustersAppWMU3
                 _currentRoom = (Room) eventArgs.Parameter;
                 TitleBlock.Text = _currentRoom.Title;
 
-                Byte[] b = _currentRoom.Surfaces[App.CurrSurface].SurfaceImage;
+                var b = _currentRoom.Surfaces[App.CurrSurface].SurfaceImage;
                 var img = await CameraServices.ToBitmapImage(b);
 
                 SurfaceImage.Source = img;
@@ -69,23 +64,27 @@ namespace CodebustersAppWMU3
    
         private async void CameraButton_Click(object sender, RoutedEventArgs e)
         {
+            // Get camera and return a picture or null
             StorageFile photo = await _photoService.TakePicture();
 
             if (photo != null)
             {
+                // Convert display and save
                 SurfaceImage.Source = await CameraServices.ToBitmapImage(photo);
-                // Assign photo to currentRoom -> current surface -> room photo
-                //_currentRoom.Surfaces[_currSurface].SurfaceImage = photo;
                 _photoService.SavePhoto(photo, _currentRoom, App.CurrSurface);
 
             }
         }
 
+        /* 
+         * Beautiful swiping functionality developed by Elvir and Nick of course,
+         * It takes into consideration that a sweep wont be perfectly horizontal or
+         * vertical. Oh, and yes it is a four way swipe.
+         */
         private void SwipeConfiguration()
         {
 
             int x1 = 0, x2 = 0, y1 = 0, y2 = 0, horizontal, vertical;
-
 
             ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY;
             ManipulationStarted += (s, e) =>
@@ -133,9 +132,8 @@ namespace CodebustersAppWMU3
                 {
                     App.CurrSurface = 5;
                 }
-
+                // Surface name
                 SwipeBlock.Text = SurfaceOptions.SurfaceSide(App.CurrSurface);
-
                 // Update the current room
                 _currentRoom = DatabaseRepository.GetRoom(_currentRoom.Title);
                 // Converting from bytearray to BitmapImage and showing it.
@@ -151,10 +149,7 @@ namespace CodebustersAppWMU3
 
         private void homeButton_Click(object sender, RoutedEventArgs e)
         {
-
             Frame.Navigate(typeof(MainPage));
-            this.Frame.BackStack.Clear();
-
         }
     }
 }

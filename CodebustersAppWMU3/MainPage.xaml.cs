@@ -89,8 +89,6 @@ namespace CodebustersAppWMU3
             }
         }
 
-       
-
         private async void RequestBackgroundAccess()
         {
             var result = await BackgroundExecutionManager.RequestAccessAsync();
@@ -104,6 +102,11 @@ namespace CodebustersAppWMU3
 
         private void TaskRegistration_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
         {
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.Frame.BackStack.Clear();
         }
     }
 
