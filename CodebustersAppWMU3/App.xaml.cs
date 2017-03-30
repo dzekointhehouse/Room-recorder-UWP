@@ -73,11 +73,23 @@ namespace CodebustersAppWMU3
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
+                    var appSettings = ApplicationData.Current.LocalSettings;
+                    var currentDate = DateTime.Now;
+                    // Time limit on restoring current room.         
+                    var terminateDate = (DateTime?) appSettings.Values["TimeStamp"];
+                    if (currentDate.Hour - terminateDate?.Hour >= 2)
+                    {
+                       rootFrame.Navigate(typeof(CreateSurfacesPage));
+                    }
+                    else
+                    {
+                        // Restore current room
+                        string title = (string)appSettings.Values["CurrentPage"];
+                        Room currentRoom = DatabaseRepository.GetRoom(title);
+                        rootFrame.Navigate(typeof(CreateSurfacesPage), currentRoom);
+                    }
 
-                    string title = (string)Appsettings.Values["CurrentPage"];
-                    Room currentRoom = DatabaseRepository.GetRoom(title);
-                    rootFrame.Navigate(typeof(CreateSurfacesPage), currentRoom);
+
                 }
 
                 // Place the frame in the current Window

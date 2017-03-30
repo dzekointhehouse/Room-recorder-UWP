@@ -15,7 +15,7 @@ using Windows.UI.Notifications;
 namespace BackgroundTask
 {
 
-    public sealed class Class1 : IBackgroundTask
+    public sealed class RoomSensorTask : IBackgroundTask
     {
 
         void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)

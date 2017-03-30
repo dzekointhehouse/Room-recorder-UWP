@@ -29,22 +29,6 @@ namespace CodebustersAppWMU3
             RegisterBackgroundTasks();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs eventArgs)
-        {
-            //if (eventArgs.Parameter != null)
-            //{
-            //    try
-            //    {
-            //        var currentRoom = (Room)eventArgs.Parameter;
-            //        Frame.Navigate(typeof(CreateSurfacesPage), currentRoom);
-            //    }
-            //    catch
-            //    {
-            //        // ignored
-            //    }
-            //}
-        }
-
         public async void GetCoordinate()
         {
             var locator = new Geolocator();

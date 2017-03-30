@@ -47,6 +47,7 @@ namespace CodebustersAppWMU3
 
             ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
             Appsettings.Values["CurrentPage"] = _currentRoom.Title;
+            Appsettings.Values["TimeStamp"] = DateTime.Now;
             ErrorMessage.DisplayErrorDialog("Suspending" + _currentRoom.Title);
 
 
