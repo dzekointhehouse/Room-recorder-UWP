@@ -145,5 +145,13 @@ namespace CodebustersAppWMU3
         {
             Frame.Navigate(typeof(SurfaceDetails), _currentRoom);
         }
+
+        private void homeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Frame.Navigate(typeof(MainPage));
+            this.Frame.BackStack.Clear();
+
+        }
     }
 }
