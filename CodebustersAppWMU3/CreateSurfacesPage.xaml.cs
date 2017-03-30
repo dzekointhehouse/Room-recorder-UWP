@@ -36,16 +36,18 @@ namespace CodebustersAppWMU3
         {
             ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
 
-            string title = (string) Appsettings.Values["CurrentPage"];
+            string title = (string)Appsettings.Values["CurrentPage"];
             _currentRoom = DatabaseRepository.GetRoom(title);
-            
+           // ErrorMessage.DisplayErrorDialog("Resuming" + title);
         }
 
         private void App_Suspending(object sender, SuspendingEventArgs e)
         {
-            //TODO = ALL THE CODE DAWG
+            ////TODO = ALL THE CODE DAWG
+
             ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;
             Appsettings.Values["CurrentPage"] = _currentRoom.Title;
+            ErrorMessage.DisplayErrorDialog("Suspending" + _currentRoom.Title);
 
 
         }
