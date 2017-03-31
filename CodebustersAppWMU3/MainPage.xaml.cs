@@ -23,19 +23,10 @@ namespace CodebustersAppWMU3
     {
         public MainPage()
         {
-
             this.InitializeComponent();
+            // Access and register background tasks.
             RequestBackgroundAccess();
             RegisterBackgroundTasks();
-        }
-
-        public async void GetCoordinate()
-        {
-            var locator = new Geolocator();
-            locator.DesiredAccuracyInMeters = 1;
-            var position = await locator.GetGeopositionAsync();
-            var myposition = position.Coordinate.Point;
-            var dummy = position.Coordinate.Point;
         }
 
         private void NewRoom_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -43,6 +34,10 @@ namespace CodebustersAppWMU3
             Frame.Navigate(typeof(CreateRoomPage));
         }
 
+        /* 
+         * Navigates to createsurfaces page if an existing room is found, otherwise it shows
+         * and error prompt.
+         */
         private void ExistingRoom_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var name = RoomNameBox.Text;
@@ -59,7 +54,11 @@ namespace CodebustersAppWMU3
             }
         }
 
-
+        /* 
+         * Registers the background task for this application. It uses a time trigger to
+         * set the background task of every 15 minutes. Which should then give us a notification
+         * if we are close to any existing room.
+         */
         private void RegisterBackgroundTasks()
         {
             bool taskRegistered = false;
@@ -89,6 +88,9 @@ namespace CodebustersAppWMU3
             }
         }
 
+        /* 
+         * Request access for the background task, before conducting business.
+         */
         private async void RequestBackgroundAccess()
         {
             var result = await BackgroundExecutionManager.RequestAccessAsync();

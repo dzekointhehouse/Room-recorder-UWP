@@ -40,6 +40,10 @@ namespace CodebustersAppWMU3
            // ErrorMessage.DisplayErrorDialog("Resuming" + title);
         }
 
+        /* 
+         * When the application is suspending we save the current room name, so
+         * we can come back to it in case of "tombstoning".
+         */
         private void App_Suspending(object sender, SuspendingEventArgs e)
         {
             ApplicationDataContainer Appsettings = ApplicationData.Current.LocalSettings;

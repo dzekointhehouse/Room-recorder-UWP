@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CodebustersAppWMU3.Models;
-using CodebustersAppWMU3.Services; 
+using CodebustersAppWMU3.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -34,6 +34,11 @@ namespace CodebustersAppWMU3
 
         }
 
+        /* 
+         * Gets the users location when creating the room, the method has switch-cases depending on the
+         * access status. if we are allowed to use the position we create an instance of geolocator and locate
+         * the "rooms" position. Otherwise we use a default location value {0,0}
+         */
         public async void GetRoomLocation()
         {
             var accessStatus = await Geolocator.RequestAccessAsync();
@@ -41,33 +46,33 @@ namespace CodebustersAppWMU3
             try
             {
 
-            switch (accessStatus)
-            {
-                case GeolocationAccessStatus.Allowed:
+                switch (accessStatus)
+                {
+                    case GeolocationAccessStatus.Allowed:
 
-                    Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = 50 };
+                        Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = 50 };
 
-                    // Subscribe to the PositionChanged event to get location updates.
-                    geolocator.PositionChanged += OnPositionChanged;
+                        // Subscribe to the PositionChanged event to get location updates.
+                        geolocator.PositionChanged += OnPositionChanged;
+                        var position = await geolocator.GetGeopositionAsync();
+                        var myposition = position.Coordinate.Point;
 
-                    geolocator.PositionChanged += OnPositionChanged;
-                    var position = await geolocator.GetGeopositionAsync();
-                    var myposition = position.Coordinate.Point;
+                        LatiValue.Text = myposition.Position.Latitude.ToString();
+                        LongtValue.Text = myposition.Position.Longitude.ToString();
+                        break;
 
-                    LatiValue.Text = myposition.Position.Latitude.ToString();
-                    LongtValue.Text = myposition.Position.Longitude.ToString();
-                    break;
-
-                case GeolocationAccessStatus.Denied:
+                    case GeolocationAccessStatus.Denied:
                         ErrorMessage.DisplayErrorDialog("Location access denied");
-                        Frame.Navigate(typeof(MainPage));
-                    break;
+                        LatiValue.Text = "0.0";
+                        LongtValue.Text = "0.0";
+                        break;
 
-                case GeolocationAccessStatus.Unspecified:
-                    ErrorMessage.DisplayErrorDialog("Some kind of error occured, please try again!");
-                    Frame.Navigate(typeof(MainPage));
-                    break;
-            }
+                    case GeolocationAccessStatus.Unspecified:
+                        ErrorMessage.DisplayErrorDialog("Some kind of error occured, please try again!");
+                        LatiValue.Text = "0.0";
+                        LongtValue.Text = "0.0";
+                        break;
+                }
             }
             catch (Exception)
             {
@@ -76,7 +81,9 @@ namespace CodebustersAppWMU3
             }
 
         }
-        /* Keeps track of the current phone position,
+
+        /* 
+         * Keeps track of the current phone position,
          * updates when the position is changed.
          */
         private async void OnPositionChanged(Geolocator sender, PositionChangedEventArgs args)
@@ -136,7 +143,9 @@ namespace CodebustersAppWMU3
             }
 
         }
-        /* Used to make sure the text parameter matches the
+
+        /* 
+         * Used to make sure the text parameter matches the
          * regex expression
          */
         private static bool IsTitleAllowed(string text)

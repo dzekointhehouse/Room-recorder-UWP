@@ -67,7 +67,7 @@ namespace CodebustersAppWMU3
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-
+                // Event handling
                 rootFrame.Navigated += OnNavigated;
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -98,7 +98,7 @@ namespace CodebustersAppWMU3
             // Register a handler for BackRequested events and set the
             // visibility of the Back button
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
-
+            // Back button should only be visible (if on pc) when you can go back.
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                 rootFrame.CanGoBack ?
                 AppViewBackButtonVisibility.Visible :
