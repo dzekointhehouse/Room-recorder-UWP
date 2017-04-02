@@ -108,18 +108,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CameraServices.cs" />
     <Compile Include="Class1.cs" />
-    <Compile Include="Models\CameraServices.cs" />
-    <Compile Include="Models\Room.cs" />
-    <Compile Include="Models\RoomConstants.cs" />
-    <Compile Include="Models\Surface.cs" />
-    <Compile Include="Models\SurfaceOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DatabaseRepository.cs" />
-    <Compile Include="Services\ErrorMessage.cs" />
-    <Compile Include="Services\LocationServie.cs" />
-    <Compile Include="Services\RoomDbContext.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
