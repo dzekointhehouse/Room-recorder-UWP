@@ -76,9 +76,11 @@ namespace CodebustersAppWMU3
             // If not registered, register it
             if (!taskRegistered)
             {
-                var builder = new BackgroundTaskBuilder();
-                builder.Name = exampleTaskName;
-                builder.TaskEntryPoint = "BackgroundTask.Class1";
+                var builder = new BackgroundTaskBuilder
+                {
+                    Name = exampleTaskName,
+                    TaskEntryPoint = "BackgroundTask.Class1"
+                };
                 builder.SetTrigger(new TimeTrigger(15, false));
 
                 var task = builder.Register();
